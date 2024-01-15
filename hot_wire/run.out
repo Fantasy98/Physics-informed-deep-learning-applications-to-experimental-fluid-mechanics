@@ -1,0 +1,126 @@
+At Sigma = 0.048	 noise = 0.063
+At Sigma = 0.003	 noise = -0.003
+At Sigma = 0.029	 noise = -0.009
+At Sigma = 0.005	 noise = -0.005
+At Sigma = 0.085	 noise = -0.091
+At Sigma = 0.005	 noise = -0.007
+At Sigma = 0.028	 noise = 0.016
+At Sigma = 0.009	 noise = 0.003
+At Sigma = 0.092	 noise = -0.150
+At Sigma = 0.006	 noise = 0.001
+At Sigma = 0.028	 noise = 0.019
+At Sigma = 0.012	 noise = 0.023
+At Sigma = 0.098	 noise = 0.094
+At Sigma = 0.007	 noise = 0.001
+At Sigma = 0.026	 noise = -0.013
+At Sigma = 0.013	 noise = 0.011
+At Sigma = 0.103	 noise = 0.150
+At Sigma = 0.006	 noise = 0.006
+At Sigma = 0.024	 noise = 0.004
+At Sigma = 0.013	 noise = 0.007
+At Sigma = 0.108	 noise = -0.144
+At Sigma = 0.005	 noise = 0.003
+At Sigma = 0.021	 noise = 0.029
+At Sigma = 0.013	 noise = -0.001
+At Sigma = 0.112	 noise = 0.014
+At Sigma = 0.004	 noise = 0.005
+At Sigma = 0.018	 noise = -0.000
+At Sigma = 0.012	 noise = 0.020
+At Sigma = 0.114	 noise = 0.041
+At Sigma = 0.002	 noise = 0.002
+At Sigma = 0.015	 noise = -0.006
+At Sigma = 0.012	 noise = 0.006
+At Sigma = 0.116	 noise = 0.196
+At Sigma = 0.001	 noise = -0.002
+At Sigma = 0.013	 noise = 0.019
+At Sigma = 0.011	 noise = -0.023
+At Sigma = 0.117	 noise = -0.015
+At Sigma = 0.000	 noise = 0.000
+At Sigma = 0.012	 noise = -0.007
+At Sigma = 0.011	 noise = 0.003
+At Sigma = 0.117	 noise = 0.148
+At Sigma = -0.000	 noise = 0.000
+At Sigma = 0.012	 noise = -0.023
+At Sigma = 0.011	 noise = 0.009
+At Sigma = 0.117	 noise = 0.120
+At Sigma = -0.001	 noise = 0.000
+At Sigma = 0.012	 noise = -0.000
+At Sigma = 0.011	 noise = 0.001
+At Sigma = 0.116	 noise = -0.189
+At Sigma = -0.001	 noise = -0.000
+At Sigma = 0.012	 noise = 0.020
+At Sigma = 0.010	 noise = 0.011
+The MIN and MAX value for u is 0.0052, 0.4881
+
+The MIN and MAX value for v is 3.4933221910025933, 8.598356575542818
+
+The MIN and MAX value for w is -0.024980419750721537, 0.23019069934633735
+
+The MIN and MAX value for uu is 0.3850225464854589, 0.9903134195636786
+
+The MIN and MAX value for vv is 0.16182369761532453, 0.47121423904837584
+
+The MIN and MAX value for uv is 0.3263, 0.5952
+
+(50, 2)
+(13, 6)
+Collection point = (78,) 
+The model has been bulited
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 2)]               0         
+                                                                 
+ dense (Dense)               (None, 20)                60        
+                                                                 
+ dense_2 (Dense)             (None, 20)                420       
+                                                                 
+ dense_4 (Dense)             (None, 20)                420       
+                                                                 
+ dense_6 (Dense)             (None, 20)                420       
+                                                                 
+ dense_8 (Dense)             (None, 20)                420       
+                                                                 
+ dense_10 (Dense)            (None, 20)                420       
+                                                                 
+ dense_12 (Dense)            (None, 20)                420       
+                                                                 
+ dense_14 (Dense)            (None, 20)                420       
+                                                                 
+ dense_15 (Dense)            (None, 6)                 126       
+                                                                 
+=================================================================
+Total params: 3,126
+Trainable params: 3,126
+Non-trainable params: 0
+_________________________________________________________________
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         3126     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 3126   2628   2962      1     0     0   6.530D-03   6.898D-03
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+None
+INFO: Solver has been setup, case name is DN_3sigma_noise2_cp50_nl8_nn20_epoch1000_S10_U1
+INFO: Training end, time cost: 22.31s
+(13, 4)
+(13, 4)
+The prediction error are [1.503 2.565 2.05  5.998]%
