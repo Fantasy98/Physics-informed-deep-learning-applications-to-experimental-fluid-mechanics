@@ -108,8 +108,10 @@ def l_mat(n):
 l2_dn   = np.empty_like(gn)
 N       = len(y)
 L       = l_mat(N)
-if args.noise>=5:
+if args.noise==5:
     lam     = 1
+elif args.noise>5:
+    lam     = 1.5 
 else:
     lam     = 0.5
 
@@ -143,18 +145,19 @@ names = [[r"$U$"+" "+"[m/s]",
         [r"$V (m/s)$","P (pa)"]]
 
 fig, axs = plt.subplots(1,4,figsize= (24,5),sharey=True)
-plt.subplots_adjust(wspace=0.35)
+plt.subplots_adjust(wspace=0.15)
 for j in range(4):
 
-        axs[j].plot(dp[j],y,"-k",lw = 3)
+        axs[j].plot(dp[j],y,"-ko",lw = 3)
+        axs[j].plot(gn[:,j],y,"-go",lw = 3)
+        
         axs[j].plot(upp[:,j],y,"-or",lw = 2)
-        axs[j].plot(gn[:,j],y,"-g",lw = 2)
-        axs[j].plot(l2_dn[:,j],y,"^-y",lw = 2)
+        axs[j].plot(l2_dn[:,j],y,"^-b",lw = 2)
         
         axs[j].set_xlabel(names[0][j],fontsize=22)
 
 # [ax.set_ylabel(r"$y (m)$") for ax in axs]
 axs[0].set_ylabel(r"$y$"+" [m]",fontsize=22)
-plt.savefig("04_fig/"+casename+".pdf",dpi=1000,bbox_inches="tight")
-plt.savefig("04_fig/"+casename+".jpg",dpi=1000,bbox_inches="tight")
+plt.savefig(f"04_fig/"+f"DN_Noise_{args.noise}"+".pdf",dpi=1000,bbox_inches="tight")
+plt.savefig(f"04_fig/"+f"DN_Noise_{args.noise}"+".jpg",dpi=1000,bbox_inches="tight")
 # %%

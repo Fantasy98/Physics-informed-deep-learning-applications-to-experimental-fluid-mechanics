@@ -9,7 +9,6 @@ from tensorflow.keras import models, layers, optimizers, activations
 from ScipyOP import optimizer as SciOP
 
 from PINN_cylinder import PINNs
-
 from time import time
 
 data = loadmat('./cylinder_nektar_wake.mat')

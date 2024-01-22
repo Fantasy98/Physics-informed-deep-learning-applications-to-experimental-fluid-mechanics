@@ -63,7 +63,7 @@ epoch   = 1000
 ind     = 0
 s_w     = 10 
 u_w     = 1
-SampleFreq =6
+SampleFreq =2
 casename_pinn = f"SR_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 casename_mlp  = f"SR_NoPI_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 ud = np.load(fdir+casename_pinn+'.npz')
@@ -185,7 +185,7 @@ for i in range(len(dp1List)):
                 error_dict[names[0][j]][-1] = e_spine
 
                 
-                axs[j].plot(dp[j],cp, "-k",lw = 3)  # Original profile 
+                axs[j].plot(dp[j],cp, "-ko",lw = 3)  # Original profile 
                 axs[j].plot(dp0[j],yd0,"o",c=color,markersize = 10) # Reference Samples
                 axs[j].plot(dp1[j],yd1,marker,c=color,markersize = 10) # Results from ML
                 axs[j].plot(g_interp,yd1,"d",c="orange",markersize=10) # Results from Interp
