@@ -31,9 +31,15 @@ def l2_norm_error(p,g):
     """
     Compute the l2 norm error 
     """
-    # error = (LA.norm(p-g,axis=-1))/LA.norm(g,axis =-1)
-    error = (LA.norm(p-g))/LA.norm(g)
-
+    error = (LA.norm(p-g,axis=(0,1)))/LA.norm(g,axis =(0,1))
+    # error = (LA.norm(p-g))/LA.norm(g)
+    # if len(p.shape) == 3:
+    #     error = np.empty(shape=(p.shape[-1]))
+    #     for il in range(p.shape[-1]):
+    #         error[il] = (LA.norm(p[:,:,il]-g[:,:,il]))/LA.norm(g[:,:,il])
+    # else:
+    #     error = (LA.norm(p-g))/LA.norm(g)
+    
     # print(error.shape)
     return error.mean() 
 
@@ -144,7 +150,6 @@ def get_test_Data(noise_level):
 
 x,y,xx,yy ,t, u, v, p, u_ns, v_ns, p_ns = get_test_Data(args.c)
 
-
 # Get training data
 # X,Y,T, xx,yy,u,v,p,ic, bc, cp = get_Data(noise_level=args.c)
 
@@ -195,11 +200,12 @@ print(f"Error of v:\t{ev * 100}")
 print(f"Error of p:\t{ep * 100}")
 # Answer: What we compute is pressure gradient, so we need some global information to bring it back to pressure
 
-
 #-------------------------------------------------------
 ##################
 ## Question 1: Why We can tell the results are GOOD? 
 ##################
+
+# Idea here: Compute the error for vorticity
 
 print("#"*30)
 print("Question 2")
@@ -214,10 +220,26 @@ print(f"Error of u:\t{eu * 100:.2f}")
 print(f"Error of v:\t{ev * 100:.2f}")
 print(f"Error of p:\t{ep * 100:.2f}")
 
-e_omega_p       = l2_norm_error(omega_z_p,omega_z)
-e_omega_ns      = l2_norm_error(omega_z_ns,omega_z)
+e_omega_p       = l2_norm_error(omega_z_p[:,:,t18],omega_z[:,:,t18])
+e_omega_ns      = l2_norm_error(omega_z_ns[:,:,t18],omega_z[:,:,t18])
+print(f"At Time = {t18}")
 print(f"For PINNS, omega error:{e_omega_p*100:.2f}")
 print(f"For NOISE, omega error:{e_omega_ns*100:.2f}")
+
+
+e_omega_p       = l2_norm_error(omega_z_p[:,:,t53],omega_z[:,:,t53])
+e_omega_ns      = l2_norm_error(omega_z_ns[:,:,t53],omega_z[:,:,t53])
+print(f"At Time = {t53}")
+print(f"For PINNS, omega error:{e_omega_p*100:.2f}")
+print(f"For NOISE, omega error:{e_omega_ns*100:.2f}")
+
+
+e_omega_p       = l2_norm_error(omega_z_p,omega_z)
+e_omega_ns      = l2_norm_error(omega_z_ns,omega_z)
+print(f"For time averged")
+print(f"For PINNS, omega error:{e_omega_p*100:.2f}")
+print(f"For NOISE, omega error:{e_omega_ns*100:.2f}")
+
 
 
 quit()
