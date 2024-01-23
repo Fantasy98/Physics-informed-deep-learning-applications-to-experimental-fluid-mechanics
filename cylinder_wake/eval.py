@@ -9,6 +9,7 @@ from scipy.io import loadmat
 from pyDOE import lhs
 from time import time
 from pathlib import Path
+from scipy.stats import pearsonr
 
 import cmocean
 import cmocean.cm as cmo
@@ -182,7 +183,7 @@ omega_z_ns = vx_ns - uy_ns
 
 #-------------------------------------------------------
 ##################
-## Question 2: Why shift the pressure??
+## Question c: Why shift the pressure??
 ##################
 print("#"*30)
 print(f"Question 1")
@@ -202,7 +203,7 @@ print(f"Error of p:\t{ep * 100}")
 
 #-------------------------------------------------------
 ##################
-## Question 1: Why We can tell the results are GOOD? 
+## Question b: Why We can tell the results are GOOD? 
 ##################
 
 # Idea here: Compute the error for vorticity
@@ -241,11 +242,18 @@ print(f"For PINNS, omega error:{e_omega_p*100:.2f}")
 print(f"For NOISE, omega error:{e_omega_ns*100:.2f}")
 
 
+r_omega_p, _       = pearsonr(omega_z.flatten(),omega_z_p.flatten())
+r_omega_ns,_      = pearsonr(omega_z.flatten(),omega_z_ns.flatten())
+print(f"For PINNS, omega Pearson Correlation:{r_omega_p:.2f}")
+print(f"For NOISE, omega Pearson Correlation:{r_omega_ns:.2f}")
 
-quit()
+
+#-------------------------------------------------------
+##################
+## Question d: What about peak of the vorticity? 
+##################
 
 
-mi18,mx18  = omega_z[:,:,t18].min(),omega_z[:,:,t18].max()
-mi53,mx53  = omega_z[:,:,t53].min(),omega_z[:,:,t53].max()
+
 
 
