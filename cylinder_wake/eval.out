@@ -1,0 +1,20 @@
+(5000, 200)
+INFO: the predcition of cylinder_PINN_5.0 has been loaded!
+##############################
+Question 1
+After shiftting, mean pressure of ref: -0.082, of pred: -0.082 
+Error of u:	7.2490385597885565
+Error of v:	8.508801072703053
+Error of p:	23.860960248142842
+##############################
+Question 2
+Adding noise 5.00%, gives error on 
+eu:	5.01
+ev:	5.00
+ep:	5.00
+For PINNS: 
+Error of u:	7.25
+Error of v:	8.51
+Error of p:	23.86
+For PINNS, omega error:69.00
+For NOISE, omega error:66.98

@@ -68,8 +68,11 @@ def get_test_Data(noise_level):
 
     ny, nx = xx.shape
     return x,y, xx,yy ,t, u, v, p, u_ns, v_ns 
-
+# Get Test data
 x,y,xx,yy ,t, u, v, p, u_ns, v_ns = get_test_Data(args.c)
+
+
+
 
 dp   = np.load(res_path + fileName + ".npz")
 print(f"INFO: the predcition of {fileName} has been loaded!")
