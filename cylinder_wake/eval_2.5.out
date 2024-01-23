@@ -18,12 +18,17 @@ Error of v:	2.98
 Error of p:	14.35
 At Time = 18
 For PINNS, omega error:8.38
-For NOISE, omega error:33.73
+For NOISE, omega error:33.77
 At Time = 53
 For PINNS, omega error:4.07
-For NOISE, omega error:34.29
+For NOISE, omega error:34.72
 For time averged
 For PINNS, omega error:7.95
-For NOISE, omega error:33.54
+For NOISE, omega error:33.57
 For PINNS, omega Pearson Correlation:1.00
 For NOISE, omega Pearson Correlation:0.95
+##############################
+Question d
+Pressure at the peak of voritcity
+At T = 18, Reference: -0.3054704328825565, Reference: -0.33045417070388794, 
+At T = 53, Reference: -0.4400973635159429, Reference: -0.4367217719554901, 
