@@ -32,3 +32,7 @@ Question d
 Pressure at the peak of voritcity
 At T = 18, Reference: -0.3054704328825565, Reference: -0.3177512288093567, 
 At T = 53, Reference: -0.4400973635159429, Reference: -0.4405204653739929, 
+
+Pressure at the lowest of voritcity
+At T = 18, Reference: -0.3642129247192933, Reference: -0.38420647382736206, 
+At T = 53, Reference: -0.23687949462750596, Reference: -0.23225197196006775, 

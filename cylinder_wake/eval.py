@@ -14,6 +14,16 @@ from scipy.stats import pearsonr
 import cmocean
 import cmocean.cm as cmo
 
+
+plt.rc('text', usetex = True)
+plt.rc('font', family = 'serif')
+plt.rc('axes', labelsize = 16, linewidth = 1)
+plt.rc('font', size = 16)
+plt.rc('legend', fontsize = 16)              
+plt.rc('xtick', labelsize = 16)             
+plt.rc('ytick', labelsize = 16)
+
+
 import argparse
 argparser   = argparse.ArgumentParser()
 argparser.add_argument("--c",default=2.5,type=float, help="Level of gaussian noise: 0, 2.5, 5, and 10%")
@@ -244,8 +254,8 @@ print(f"For NOISE, omega error:{e_omega_ns*100:.2f}")
 
 r_omega_p, _       = pearsonr(omega_z.flatten(),omega_z_p.flatten())
 r_omega_ns,_      = pearsonr(omega_z.flatten(),omega_z_ns.flatten())
-print(f"For PINNS, omega Pearson Correlation:{r_omega_p:.2f}")
-print(f"For NOISE, omega Pearson Correlation:{r_omega_ns:.2f}")
+print(f"For PINNS, omega Pearson Correlation:{r_omega_p:.4f}")
+print(f"For NOISE, omega Pearson Correlation:{r_omega_ns:.4f}")
 
 
 #-------------------------------------------------------
@@ -258,33 +268,51 @@ print("Question d")
 
 # Find the peak of vorticity and compare the value 
 Nt = omega_z.shape[-1]
-fig,axs = plt.subplots(1,1,figsize = (8,4))
 
 Pp  =  []
 P   =  []
+P_min  = []
+Pp_min  = []
+
 for ti in range(Nt):
     max_id = np.argmax(omega_z[:,:,ti].flatten())
-
-    # print(max_id)
     peak_omega      = p[:,:,ti].flatten()[max_id]
     peak_omega_p    = pp[:,:,ti].flatten()[max_id]
+    
+    
+    min_id = np.argmin(omega_z[:,:,ti].flatten())
+    bottom_omega      = p[:,:,ti].flatten()[min_id]
+    bottom_omega_p    = pp[:,:,ti].flatten()[min_id]
     
     # print(f"At time = {ti}, Ref: Pressure at peak of voritcity: {peak_omega:.2f}")
     
     # print(f"At time = {ti}, Pred: Pressure at peak of voritcity: {peak_omega_p:.2f}")
     Pp.append(peak_omega_p)
     P.append(peak_omega)
+
+    Pp_min.append(bottom_omega_p)
+    P_min.append( bottom_omega)
+
+print(len(P))
+
 print("Pressure at the peak of voritcity")
 print(f'At T = {t18}, Reference: {P[t18]}, Reference: {Pp[t18]}, ')
 print(f'At T = {t53}, Reference: {P[t53]}, Reference: {Pp[t53]}, ')
 
-axs.plot(t.flatten(), P,"-ok",label='Ground truth')
-axs.plot(t.flatten(), Pp,"-sr",label ="Prediction")
-axs.set_xlabel("Time")
-axs.set_ylabel("P")
-axs.set_title(f'Pressure at peak voriticity (Noise Level = {args.c}%)')
-axs.legend()
-plt.savefig(fig_path + f'{args.c}_Peak_pressure.jpg',bbox_inches='tight')
+
+print("\nPressure at the lowest of voritcity")
+print(f'At T = {t18}, Reference: {P_min[t18]}, Reference: {Pp_min[t18]}, ')
+print(f'At T = {t53}, Reference: {P_min[t53]}, Reference: {Pp_min[t53]}, ')
+
+
+# fig,axs = plt.subplots(1,1,figsize = (8,4))
+# axs.plot(t.flatten(), P,"-ok",label='Ground truth')
+# axs.plot(t.flatten(), Pp,"-sr",label ="Prediction")
+# axs.set_xlabel("Time")
+# axs.set_ylabel("P")
+# axs.set_title(f'Pressure at peak voriticity (Noise Level = {args.c}%)')
+# axs.legend()
+# plt.savefig(fig_path + f'{args.c}_Peak_pressure.jpg',bbox_inches='tight')
 
 #-------------------------------------------------------
 ##################
@@ -301,7 +329,7 @@ if args.c ==0:
     vmax,vmin = p53.max(), p53.min()
     pp53 = pp[:,:,t53]
 
-    fig, axs = plt.subplots(2,2,sharex=True, sharey=True, figsize=(6,4))
+    fig, axs = plt.subplots(2,2,sharex=True, sharey=True, figsize=(6,4.5))
 
     c0 = axs[0,1].contourf(xx,yy,p53 ,vmin = vmin, vmax = vmax,cmap=cmap)
     c1 = axs[0,0].contourf(xx,yy,pp53,vmin = vmin, vmax = vmax,cmap=cmap)
@@ -311,23 +339,45 @@ if args.c ==0:
     axs[0,0].set_title("PINNs")
     axs[0,1].set_title("Reference")
     
-    plt.colorbar(c0,ax=axs[0,0])
-    plt.colorbar(c1,ax=axs[0,1])
+    cax = fig.add_axes([0.95,0.57,0.01,0.26])
+    cb0 = plt.colorbar(c0,cax=cax,format = "%.2f",shrink = 0.9, pad = 0.25, aspect = 20)
+    cb0.ax.locator_params(nbins=3)
+    # cb0.set_ticks([0.8*vmin,0.3*vmin, 0.8*vmax])
+
+    # cb1 = plt.colorbar(c1,ax=axs[0,1],format = "%.2f",shrink = 0.9, pad = 0.15, aspect = 20)
     
+
     pabs = np.abs(p53-pp53)
     prel = np.abs((p53-pp53)/p53)
 
     c2 = axs[1,0].contourf(xx,yy,pabs,cmap=cmapr,levels=50)
     c3 = axs[1,1].contourf(xx,yy,prel,cmap=cmapr,levels=50)
 
-    plt.colorbar(c2,ax=axs[1,0])
-    plt.colorbar(c3,ax=axs[1,1])
+
+    cax2 = fig.add_axes([0.15,-0.02,0.3,0.01])
+    cb2 = plt.colorbar(c2,cax=cax2,format = "%.2f", 
+                        orientation='horizontal',
+                        shrink = 0.9, 
+                        pad = 0.25, aspect = 20)
+    cb2.set_ticks([0.2*pabs.max(), 0.5*pabs.max(), 0.8*pabs.max()])
+    cb2.ax.locator_params(nbins=3)
+    
+
+    cax3 = fig.add_axes([0.58,-0.02,0.3,0.01])
+    cb3 = plt.colorbar(c3,cax=cax3,format = "%.1d", 
+                        orientation='horizontal',
+                        shrink = 0.9, 
+                        pad = 0.25, aspect = 20)
+
+    cb3.set_ticks([0.2*prel.max(), 0.5*prel.max(), 0.8*prel.max()])
+    cb3.ax.locator_params(nbins=3)
+    
 
     axs[1,0].set_aspect('equal')
     axs[1,1].set_aspect('equal')
 
-    axs[1,0].set_title(r"$\epsilon = |p - \hat{p}|$")
-    axs[1,1].set_title(r"$\epsilon = |\frac{p - \hat{p}}{p}|$")
+    axs[1,0].set_title(r"$\varepsilon = |p - \hat{p}|$")
+    axs[1,1].set_title(r"$\hat{\varepsilon} = |\frac{p - \hat{p}}{p}| (\%)$")
     
 
     axs[0,0].set_ylabel("y")
@@ -335,4 +385,58 @@ if args.c ==0:
     axs[1,1].set_xlabel("x")
     axs[1,0].set_xlabel("x")
     plt.savefig(fig_path + "clean_pressure.pdf",bbox_inches='tight',dpi=500)
-    plt.savefig(fig_path + "clean_pressure.jpg",bbox_inches='tight',dpi=500)
+    plt.savefig(fig_path + "clean_pressure.png",bbox_inches='tight',dpi=500)
+
+
+##################
+## Question : Too Many 'Very good'
+##################
+
+
+# if args.c == 5: 
+
+    
+#     u = data['U_star'][:, 0]
+#     v = data['U_star'][:, 1]
+#     p = data['p_star']
+#     # print(u.shape)
+#     x = data['X_star'][:, 0]
+#     y = data['X_star'][:, 1]
+#     t = data['t']
+
+#     x = x.reshape((-1, 100))
+#     y = y.reshape((-1, 100))
+#     x = x[0,:]
+#     y = y[:,0]
+#     u = u.reshape((-1, 100, 200))
+#     v = v.reshape((-1, 100, 200))
+
+
+#     uy = np.gradient(u, y, axis = 0, edge_order=2)
+#     vx = np.gradient(v, x, axis = 1, edge_order=2)
+#     omega_z_full = vx - uy
+
+#     omega_z_ = omega_z_full.reshape(-1,100,200)
+#     omega_z_ = np.moveaxis(omega_z_,-1,1)
+#     nT       = omega_z_.shape[0]
+#     us       = omega_z_.reshape(nT, -1)
+#     # us      -= us.mean(0)
+#     # us      /= (nT -1)
+
+
+#     C        = us.T.dot(us)
+#     C        = C /(nT - 1)
+
+#     # ## Apply POD
+#     U,S,_ = LA.svd(C,full_matrices=False)
+    
+#     Vh     = us.dot(U)
+
+#     fig, axs = plt.subplots(3,1, sharex= True, sharey= True,figsize = (4,8))
+    
+#     noMode = [2,4,6]
+#     for i, n in enumerate(noMode):
+#         # axs[i].plot(t,Vh[n,:],'-b')
+#         axs[i].plot(Vh[:,n],'-b')
+#         axs[i].set_ylabel(f"a{n+1}")
+#     plt.show()

@@ -9,21 +9,31 @@ Error of p:	25.424628972094133
 ##############################
 Question 2
 Adding noise 10.00%, gives error on 
-eu:	9.99
+eu:	10.00
 ev:	10.00
-ep:	10.01
+ep:	10.05
 For PINNS: 
 Error of u:	7.53
 Error of v:	10.77
 Error of p:	25.42
 At Time = 18
 For PINNS, omega error:77.87
-For NOISE, omega error:134.78
+For NOISE, omega error:135.22
 At Time = 53
 For PINNS, omega error:33.46
-For NOISE, omega error:136.01
+For NOISE, omega error:135.06
 For time averged
 For PINNS, omega error:70.24
-For NOISE, omega error:133.99
-For PINNS, omega Pearson Correlation:0.76
-For NOISE, omega Pearson Correlation:0.60
+For NOISE, omega error:133.84
+For PINNS, omega Pearson Correlation:0.7630
+For NOISE, omega Pearson Correlation:0.5983
+##############################
+Question d
+70
+Pressure at the peak of voritcity
+At T = 18, Reference: -0.3054704328825565, Reference: -0.316159188747406, 
+At T = 53, Reference: -0.4400973635159429, Reference: -0.4502071738243103, 
+
+Pressure at the lowest of voritcity
+At T = 18, Reference: -0.3642129247192933, Reference: -0.3878422975540161, 
+At T = 53, Reference: -0.23687949462750596, Reference: -0.24430003762245178, 

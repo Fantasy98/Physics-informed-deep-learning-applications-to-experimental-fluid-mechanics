@@ -48,6 +48,7 @@ class PINNs(models.Model):
         f3 = u_x + v_y
         
         f = tf.stack([f1, f2, f3], axis = -1)
+        
         return f
     
     
