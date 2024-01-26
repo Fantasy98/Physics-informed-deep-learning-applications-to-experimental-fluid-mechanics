@@ -6,27 +6,34 @@ After shiftting, mean pressure of ref: -0.082, of pred: -0.082
 Error of u:	7.5254633137883316
 Error of v:	10.773513606689171
 Error of p:	25.424628972094133
+Correlation Coefficient:
+For PINNS, R_U:0.9636
+For NOISE, R_U:0.9525
+For PINNS, R_V:0.9944
+For NOISE, R_V:0.9950
+For PINNS, R_P:0.9251
+For NOISE, R_P:0.9918
 ##############################
 Question 2
 Adding noise 10.00%, gives error on 
-eu:	10.00
-ev:	10.00
-ep:	10.05
+eu:	10.02
+ev:	9.99
+ep:	10.03
 For PINNS: 
 Error of u:	7.53
 Error of v:	10.77
 Error of p:	25.42
 At Time = 18
 For PINNS, omega error:77.87
-For NOISE, omega error:135.22
+For NOISE, omega error:139.83
 At Time = 53
 For PINNS, omega error:33.46
-For NOISE, omega error:135.06
+For NOISE, omega error:137.32
 For time averged
 For PINNS, omega error:70.24
-For NOISE, omega error:133.84
+For NOISE, omega error:134.64
 For PINNS, omega Pearson Correlation:0.7630
-For NOISE, omega Pearson Correlation:0.5983
+For NOISE, omega Pearson Correlation:0.5964
 ##############################
 Question d
 70

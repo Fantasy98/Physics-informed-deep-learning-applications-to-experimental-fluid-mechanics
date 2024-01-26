@@ -209,6 +209,28 @@ ep   = l2_norm_error(pp,p)
 print(f"Error of u:\t{eu * 100}")
 print(f"Error of v:\t{ev * 100}")
 print(f"Error of p:\t{ep * 100}")
+
+
+print(f"Correlation Coefficient:")
+r_u, _       = pearsonr(up.flatten(),   u.flatten())
+r_u_ns,_      = pearsonr(u_ns.flatten(),u.flatten())
+print(f"For PINNS, R_U:{r_u:.4f}")
+print(f"For NOISE, R_U:{r_u_ns:.4f}")
+
+
+
+r_v, _       = pearsonr(vp.flatten(),   v.flatten())
+r_v_ns,_      = pearsonr(v_ns.flatten(),v.flatten())
+print(f"For PINNS, R_V:{r_v:.4f}")
+print(f"For NOISE, R_V:{r_v_ns:.4f}")
+
+
+r_p, _       = pearsonr(pp.flatten(),   p.flatten())
+r_p_ns,_      = pearsonr(p_ns.flatten(),p.flatten())
+print(f"For PINNS, R_P:{r_p:.4f}")
+print(f"For NOISE, R_P:{r_p_ns:.4f}")
+
+
 # Answer: What we compute is pressure gradient, so we need some global information to bring it back to pressure
 
 #-------------------------------------------------------

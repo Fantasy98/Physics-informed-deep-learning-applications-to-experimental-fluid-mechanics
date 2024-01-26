@@ -65,7 +65,7 @@ def get_Data(noise_level):
 
     ny, nx = xx.shape
 
-    ncp = 2000
+    ncp = 2000 
     lb = np.array([x.min(), y.min(), t.min()])
     ub = np.array([x.max(), y.max(), t.max()])
 
