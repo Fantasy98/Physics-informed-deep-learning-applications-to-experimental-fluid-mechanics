@@ -115,3 +115,17 @@ for i, name in enumerate(Names):
     r_u_pred2,_ = pearsonr(u_pred2[i].flatten(), u[i].flatten())
     print(f"Case t3-s8:")
     print(f"{name}:\t{r_u_pred2:.4f}")
+
+
+
+if args.c !=0 : 
+    noise_level = args.c 
+    print(f"Examine The noise")
+    for i, name in enumerate(Names):
+
+        n_u     = u[i] + np.random.normal(0,noise_level,np.shape(u[i])) * u[i] / 100 
+        sr_n, _ = pearsonr(n_u.flatten(), u[i].flatten())
+        e_n     = l2_norm_error(n_u, u[i])
+
+        print(f"AS noise level = {noise_level}, {name} = {sr_n:.4f}")
+        print(f"AS noise level = {noise_level}, Error = {e_n:.4f}")
