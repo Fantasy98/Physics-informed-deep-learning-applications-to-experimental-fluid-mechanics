@@ -1,0 +1,1 @@
+singularity run --nv tensorflow_2.6.1-gpu.sif

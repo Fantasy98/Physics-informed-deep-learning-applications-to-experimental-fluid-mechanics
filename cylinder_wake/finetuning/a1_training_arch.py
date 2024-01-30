@@ -84,14 +84,15 @@ sp, cp, grid = get_data(c)
 nv = 3 #(u, v, p)
 
 
-
+sw  = 1 
+uw  = 10 
 NL  = [4,  6,  10]
 NN  = [20, 60, 100]
 
 for nl in NL:
     for nn in NN:
         
-        case_name = f"cyliner_nl{nl}_nn{nn}_Gn{c}"
+        case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
         print(f"INFO: Start training for {case_name}")
         act = activations.tanh
         inp = layers.Input(shape = (3,))
@@ -108,7 +109,7 @@ for nl in NL:
         n_training_with_adam = 1000
 
         st_time = time()
-        pinn = PINN(model, opt, n_training_with_adam,sw =1 , uw = 10)
+        pinn = PINN(model, opt, n_training_with_adam,sw =sw , uw = uw)
         hist = pinn.fit(sp, cp)
 
         en_time = time()
@@ -124,8 +125,13 @@ for nl in NL:
         np.savez_compressed(data_path + 'res_' + case_name + '.npz', up = up, hist = hist, comp_time=comp_time)
         model.save(model_path + case_name + '.h5')
         
+        del model, up, pinn, opt, inp, hl, out
         model   = None 
         up      = None 
         pinn    = None
+        opt     = None
+        inp     = None 
+        hl      = None 
+        out     = None
 
         K.clear_session()
