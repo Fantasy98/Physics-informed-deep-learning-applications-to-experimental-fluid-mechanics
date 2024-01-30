@@ -1,24 +1,287 @@
-INFO: Start training for cyliner_nl4_nn20_Gn5.0
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403      3     32      1     0     0   3.415D-03   4.826D-02
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    436    468      1     0     0   6.436D-03   7.687D-03
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    346    402      1     0     0   1.001D-02   9.483D-03
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    293    327      1     1     0   1.481D-02   1.467D-02
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    315    361      1     0     0   1.104D-02   1.513D-02
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    296    316      1     0     0   8.650D-03   1.726D-02
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+INFO: Start training for cyliner_nl4_nn20_sw1_uw10_Gn5.0
 Model: "model"
 _________________________________________________________________
- Layer (type)                Output Shape              Param #   
+Layer (type)                 Output Shape              Param #   
 =================================================================
- input_1 (InputLayer)        [(None, 3)]               0         
-                                                                 
- dense (Dense)               (None, 20)                80        
-                                                                 
- dense_1 (Dense)             (None, 20)                420       
-                                                                 
- dense_2 (Dense)             (None, 20)                420       
-                                                                 
- dense_3 (Dense)             (None, 20)                420       
-                                                                 
- dense_4 (Dense)             (None, 3)                 63        
-                                                                 
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
 =================================================================
 Total params: 1,403
 Trainable params: 1,403
 Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl4_nn60_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl4_nn100_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl6_nn20_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl6_nn60_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl6_nn100_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl10_nn20_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
 _________________________________________________________________
 RUNNING THE L-BFGS-B CODE
 
@@ -40,29 +303,103 @@ F     = final function value
            * * *
 
    N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
- 1403  20887  22620      1     0     0   1.245D-04   9.997D-04
+ 1403      2     30      1     0     0   5.062D-03   4.458D-02
 
 CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
-None
-INFO: Start training for cyliner_nl4_nn60_Gn5.0
-Model: "model"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- input_1 (InputLayer)        [(None, 3)]               0         
-                                                                 
- dense (Dense)               (None, 20)                80        
-                                                                 
- dense_1 (Dense)             (None, 20)                420       
-                                                                 
- dense_2 (Dense)             (None, 20)                420       
-                                                                 
- dense_3 (Dense)             (None, 20)                420       
-                                                                 
- dense_4 (Dense)             (None, 3)                 63        
-                                                                 
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    274    317      1     0     0   1.219D-02   9.859D-03
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403    379    422      1     0     0   1.394D-02   1.049D-02
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+dense_4 (Dense)              (None, 3)                 63        
 =================================================================
 Total params: 1,403
 Trainable params: 1,403
 Non-trainable params: 0
 _________________________________________________________________
+None
+INFO: Start training for cyliner_nl10_nn60_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None
+INFO: Start training for cyliner_nl10_nn100_sw1_uw10_Gn5.0
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 3)]               0         
+_________________________________________________________________
+dense (Dense)                (None, 20)                80        
+_________________________________________________________________
+dense_1 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_2 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_3 (Dense)              (None, 20)                420       
+_________________________________________________________________
+dense_4 (Dense)              (None, 3)                 63        
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+None

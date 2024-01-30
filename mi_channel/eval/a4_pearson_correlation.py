@@ -147,5 +147,5 @@ if args.c !=0 :
     
     print(omega_z_noise.shape, omega_z.shape)
     omega_n,_ = pearsonr(omega_z_noise[0].flatten(),omega_z.flatten())
-
+    
     print(f"AS noise level = {noise_level}, R_Omega = {omega_n:.4f}")

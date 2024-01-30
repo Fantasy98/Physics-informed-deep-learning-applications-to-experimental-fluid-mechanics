@@ -1,0 +1,11 @@
+Total Number of the sample points: 1065000
+At Noise level = 2.5
+Error: U, V, P 
+[ 3.13109964  6.92346296 10.62742456]
+cross-correlation of U: 	 0.995
+cross-correlation of V: 	 0.997
+cross-correlation of P: 	 0.990
+For Vorticity:
+The cross-correlation:
+PINNS	0.985
+Noise	0.948

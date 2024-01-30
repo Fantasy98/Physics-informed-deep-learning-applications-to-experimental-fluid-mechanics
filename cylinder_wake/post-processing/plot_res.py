@@ -67,14 +67,17 @@ w_pinn = vx_pinn - uy_pinn
 # w_pinn = np.where(np.abs(w_pinn) < 0.12, 0, w_pinn)
 #%%
 fig, ax = plt.subplots(3, 3, figsize=(15.5, 6))
-plt.set_cmap('cmo.tarn')
+# plt.set_cmap('cmo.tarn')
+cmap = "cmo.tarn"
+# plt.rcParams['image.cmap'] = 'cmo.tarn'
 l = 12
-c0 = ax[0, 0].contourf(x, y, w[:, :, 18], levels = l, vmin = -2, vmax = 2)
-c1 = ax[0, 1].contourf(x, y, w[:, :, 53], levels = l, vmin = -2, vmax = 2)
-ax[1, 0].contourf(x, y, w_noise[:, :, 18], levels = l, vmin = -2, vmax = 2)
-ax[1, 1].contourf(x, y, w_noise[:, :, 53], levels = l, vmin = -2, vmax = 2)
-ax[2, 0].contourf(x, y, w_pinn[:, :, 18], levels = l, vmin = -2, vmax = 2)
-ax[2, 1].contourf(x, y, w_pinn[:, :, 53], levels = l, vmin = -2, vmax = 2)
+
+c0 = ax[0, 0].contourf(x, y, w[:, :, 18], cmap=cmap,levels = l, vmin = -2, vmax = 2)
+c1 = ax[0, 1].contourf(x, y, w[:, :, 53], cmap=cmap,levels = l, vmin = -2, vmax = 2)
+ax[1, 0].contourf(x, y, w_noise[:, :, 18],cmap=cmap, levels = l, vmin = -2, vmax = 2)
+ax[1, 1].contourf(x, y, w_noise[:, :, 53],cmap=cmap, levels = l, vmin = -2, vmax = 2)
+ax[2, 0].contourf(x, y, w_pinn[:, :, 18], cmap=cmap,levels = l, vmin = -2, vmax = 2)
+ax[2, 1].contourf(x, y, w_pinn[:, :, 53], cmap=cmap,levels = l, vmin = -2, vmax = 2)
 
 n = 3
 ax[0, 2].plot(t, vh[n, :nt], c = 'tab:blue', label = 'Reference')
@@ -88,6 +91,25 @@ ax[1, 2].plot(t, vh_pinn[n, :nt], c = 'tab:orange', ls = '-.')
 n = 7
 ax[2, 2].plot(t, vh[n, :nt], c = 'tab:blue')
 ax[2, 2].plot(t, vh_pinn[n, :nt], c = 'tab:orange', ls = '-.')
+
+
+##################
+## Evaluate the l2-norm error obtained from the temporal coefficients
+##################
+from numpy import linalg as LA
+
+e_a3 = LA.norm(vh_pinn[3,:nt] - vh[3,:nt])/LA.norm(vh[3,:nt])
+e_a5 = LA.norm(vh_pinn[5,:nt] - vh[5,:nt])/LA.norm(vh[5,:nt])
+e_a7 = LA.norm(vh_pinn[7,:nt] - vh[7,:nt])/LA.norm(vh[7,:nt])
+print(f"The relative Ecduliean norm error: \n{e_a3*100:.3f}\n{e_a5*100:.3f}\n{e_a7*100:.3f} ")
+
+from scipy.stats import pearsonr
+r_a3,_ = pearsonr(vh_pinn[3,:nt], vh[3,:nt])
+r_a5,_ = pearsonr(vh_pinn[5,:nt], vh[5,:nt])
+r_a7,_ = pearsonr(vh_pinn[7,:nt], vh[7,:nt])
+print(f"The cross correlation: \n{r_a3*100:.3f}\n{r_a5*100:.3f}\n{r_a7*100:.3f} ")
+
+
 
 
 for axx in ax[:, -1]:
@@ -136,11 +158,12 @@ n = 18
 e_pinn = np.abs(u_pinn[2, :, :, n] - p[:, :, n])
 
 fig, ax = plt.subplots(1, 3, figsize=(12, 4))
-plt.set_cmap('cmo.tarn_r')
+# plt.set_cmap('cmo.tarn_r')
+cmap = 'cmo.tarn_r'
 
-c0 = ax[1].contourf(x, y, p[:, :, n], levels = l, vmin = -0.5, vmax = 0.05)
-ax[0].contourf(x, y, u_pinn[2, :, :, n], levels = l, vmin = -0.5, vmax = 0.05)
-c1 = ax[2].contourf(x, y, e_pinn, levels = l)
+c0 = ax[1].contourf(x, y, p[:, :, n],    cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
+ax[0].contourf(x, y, u_pinn[2, :, :, n], cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
+c1 = ax[2].contourf(x, y, e_pinn,        cmap = cmap, levels = l)
 
 for axx in ax.flatten():
     axx.set_aspect('equal')
