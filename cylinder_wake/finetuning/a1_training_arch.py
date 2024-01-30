@@ -6,11 +6,12 @@ Hyper Parameter tunning
 import numpy as np
 from scipy.io import loadmat
 from pyDOE import lhs
+import tensorflow as tf 
 from tensorflow.keras import models, layers, optimizers, activations
 from tensorflow.keras import backend as K 
 from PINN_cylinder import PINN
 from time import time
-
+import os 
 data_path  = 'tune_data/'
 model_path = 'tune_model/'
 from pathlib import Path
@@ -91,47 +92,53 @@ NN  = [20, 60, 100]
 
 for nl in NL:
     for nn in NN:
-        
+        # sp, cp, grid = get_data(c)
         case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
-        print(f"INFO: Start training for {case_name}")
-        act = activations.tanh
-        inp = layers.Input(shape = (3,))
-        hl = inp
-        for i in range(4):
-            hl = layers.Dense(20, activation = act)(hl)
-        out = layers.Dense(nv)(hl)
+        if os.path.exists(data_path + "res_" + case_name + '.npz'):
+            print(f"EXISTS: {case_name}")
+            continue
+        else:
+            print(f"INFO: Start training for {case_name}")
+            act = activations.tanh
+            inp = layers.Input(shape = (3,))
+            hl = inp
+            for i in range(nl):
+                hl = layers.Dense(nn, activation = act)(hl)
+            out = layers.Dense(nv)(hl)
 
-        model = models.Model(inp, out)
-        print(model.summary())
+            model = models.Model(inp, out)
+            print(model.summary())
 
-        lr = 1e-3
-        opt = optimizers.Adam(lr)
-        n_training_with_adam = 1000
+            lr = 1e-3
+            opt = optimizers.Adam(lr)
+            n_training_with_adam = 1000
 
-        st_time = time()
-        pinn = PINN(model, opt, n_training_with_adam,sw =sw , uw = uw)
-        hist = pinn.fit(sp, cp)
+            st_time = time()
+            pinn = PINN(model, opt, n_training_with_adam,sw =sw , uw = uw)
+            hist = pinn.fit(sp, cp)
 
-        en_time = time()
-        comp_time = en_time - st_time
-        x, y, t = grid
-        ny = y.shape[0]
-        nx = x.shape[0]
+            en_time = time()
+            comp_time = en_time - st_time
+            x, y, t = grid
+            ny = y.shape[0]
+            nx = x.shape[0]
 
-        X, Y, T = np.meshgrid(x, y, t)
-        cp = np.array([X.flatten(), Y.flatten(), T.flatten()]).T
-        up = pinn.predict(cp).T
-        up = up.reshape((3, ny, nx, -1), order = 'C')
-        np.savez_compressed(data_path + 'res_' + case_name + '.npz', up = up, hist = hist, comp_time=comp_time)
-        model.save(model_path + case_name + '.h5')
-        
-        del model, up, pinn, opt, inp, hl, out
-        model   = None 
-        up      = None 
-        pinn    = None
-        opt     = None
-        inp     = None 
-        hl      = None 
-        out     = None
+            X, Y, T = np.meshgrid(x, y, t)
+            cp = np.array([X.flatten(), Y.flatten(), T.flatten()]).T
+            up = pinn.predict(cp).T
+            up = up.reshape((3, ny, nx, -1), order = 'C')
+            np.savez_compressed(data_path + 'res_' + case_name + '.npz', up = up, hist = hist, comp_time=comp_time)
+            model.save(model_path + case_name + '.h5')
+            
+            del model, hist
+            model   = None 
+            up      = None 
+            pinn    = None
+            opt     = None
+            inp     = None 
+            hl      = None 
+            out     = None
+            hist    = None
 
-        K.clear_session()
+            K.clear_session()
+            quit()
