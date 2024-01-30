@@ -2,13 +2,22 @@
 Try to implement Gappy POD on the data
 @yuningw
 """
-
+from copy import deepcopy
 import numpy as np
 from pyDOE import lhs
 from time import time
-
+import matplotlib.pyplot as plt 
+import numpy.linalg as LA 
 import argparse
-
+import cmocean as cmo
+from tqdm import tqdm
+def l2_norm_error(p,g): 
+    """
+    Compute the l2 norm error 
+    """
+    import numpy.linalg as LA
+    error = (LA.norm(p-g,axis=(0,1)))/LA.norm(g,axis =(0,1))
+    return error.mean() * 100
 argparser   = argparse.ArgumentParser()
 argparser.add_argument("--t",default=5,type=int, help="The number of points sampled from Time")
 argparser.add_argument("--s",default=16,type=int, help="The number of points sampled from Space")
@@ -30,6 +39,8 @@ u = data['u'] # dimensions  = (nz, ny, nx, nt)
 v = data['v']
 w = data['w']
 t = data['t']
+
+yy, zz, xx = np.meshgrid(y, z, x)
 nz, ny, nx, nt = u.shape
 grid = (x, y, z, t)
     # low resolution and noisy data for supervised learning
@@ -66,19 +77,79 @@ print(f"INFO: The reduced percentage: {reduce_percentage * 100 }")
 
 #-------------------------------------------------
 # generate a mask to identify the missing data
-mask                    = np.zeros_like(u,dtype=np.int32) 
-mask[:,::sy,::sx,::st]  = 1
 
-V                       = u.reshape(nt,-1)
-M                       = mask.reshape(V.shape)
-tV                      = M * V
+# An empty tensor which full of nan
+u_s                     = np.empty_like(u)
+u_s[:,:,:,:]            = np.nan
+# Give the same initial condition that PINNs has 
+u_s[:,::sx,::sy,::st]   = u[:,::sx,::sy,::st]
+mask                    = np.isnan(u_s)
 
-print(tV.shape)
-V[np.where(M==0)]                = 0                  
-print(tV == V)
-# V_guess                 = np.ones_like(u) * u.mean()
+
+nP                      = len(mask.flatten()==True)
+# Use the mean value as initial guess, based on the 
+gmean                   = u_s[~mask].mean()
+u_s[mask]               = gmean
+V                       = u_s.reshape(nt,-1)
+# Implement a svd to find adequate rank
+U, S_, Vh   = LA.svd(u.reshape(nt,-1), full_matrices=False)
+rank        = 5
+energy      = np.sum(S_[:rank])/np.sum(S_)
+print(f'Use rank = {rank}, energy = {energy:.2f}')
+ev                      = l2_norm_error(u_s, u)
+print(f"After initial guessing, error = {ev:.2f}")
+Niter = 100
+
+# Start for loop for fitting data 
+for i in tqdm(range(Niter)):
+    # We implement SVD on data, create a basis to use 
+    U, S_, Vh   = LA.svd(V,full_matrices=False)
+    U           = U[:,:rank] 
+    S           = S_[:rank]
+    Vh          = Vh[:rank]
+
+    coeff       = LA.lstsq(U,V)[0]
+    V           = U @ coeff
+    V           = V.reshape(nz,ny,nx,nt)
+    
+    # Use the reconstructed repaired data to replace our initial guess
+    
+    u_s[mask]   = V[mask]
+    u_s[~mask]  = u[~mask]
+    # Go for next iteration
+    V           = u_s.reshape(nt,-1)
+
+ur          = V.reshape(nz,ny,nx,nt)
+
+ev = l2_norm_error(ur, u)
+print(f"using rank of {rank}, error = {ev:.2f}")
+
+
+np.savez_compressed(f'gappy_u_r{rank}_iter{Niter}.npz',
+                    U=U,
+                    S=S_,
+                    Vh = Vh,
+                    r = rank)
+
+# #################
+# ## Visualisation
+# ################
+fig, axs = plt.subplots(3,1)
+axs[0].contourf(x,y,u[0,:,:,0])
+axs[1].contourf(x,y,ur[0,:,:,0])
+axs[2].plot(1 - S_/S_.max())
+axs[2].plot(1 - S_[:rank]/S_.max(),'or')
+plt.show()
 
 
 #-------------------------------------------------
-# Flatten the 
 
+"""
+Conclusion: 
+
+The gappy POD still requires the spatial modes of the original data 
+and use lstsq for correcting the temporal coefficient obtained by POD at each step 
+
+Therefore, it is not comparable with the PINNs method as PINNs does not require prior reference during training. 
+We train on the noisy and uncomplete data 
+"""

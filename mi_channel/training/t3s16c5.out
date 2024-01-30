@@ -31,3 +31,27 @@ Total params: 91,804
 Trainable params: 91,804
 Non-trainable params: 0
 _________________________________________________________________
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  46798  50001      1     0     0   6.983D-05   6.503D-05
+
+STOP: TOTAL NO. of f AND g EVALUATIONS EXCEEDS LIMIT        
+None

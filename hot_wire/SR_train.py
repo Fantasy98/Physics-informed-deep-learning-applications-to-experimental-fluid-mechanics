@@ -84,7 +84,7 @@ epoch = args.epoch
 s_w = args.sw
 u_w = args.uw
 solv = Solver(nn=nn,nl=nl,epoch=epoch,
-              s_w=s_w,u_w=u_w)
+            s_w=s_w,u_w=u_w)
 
 
 case_name = f"SR_cp{ncp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"

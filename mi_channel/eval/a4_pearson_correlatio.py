@@ -116,16 +116,36 @@ for i, name in enumerate(Names):
     print(f"Case t3-s8:")
     print(f"{name}:\t{r_u_pred2:.4f}")
 
+r_omega, _ = pearsonr(omega_z_pred1.flatten(), omega_z.flatten())
+print(f"\nCase t{args.t}-s{args.s}:")
+print(f"Omega:\t{r_u_pred1:.4f}")
+
 
 
 if args.c !=0 : 
     noise_level = args.c 
     print(f"Examine The noise")
+    n_u         = np.empty_like(u)
+
     for i, name in enumerate(Names):
 
-        n_u     = u[i] + np.random.normal(0,noise_level,np.shape(u[i])) * u[i] / 100 
-        sr_n, _ = pearsonr(n_u.flatten(), u[i].flatten())
-        e_n     = l2_norm_error(n_u, u[i])
+        n_u[i]     = u[i] + np.random.normal(0,noise_level,np.shape(u[i])) * u[i] / 100 
+        sr_n, _ = pearsonr(n_u[i].flatten(), u[i].flatten())
+        e_n     = l2_norm_error(n_u[i], u[i])
 
         print(f"AS noise level = {noise_level}, {name} = {sr_n:.4f}")
-        print(f"AS noise level = {noise_level}, Error = {e_n:.4f}")
+        print(f"AS noise level = {noise_level}, Error = {e_n:.4f}") 
+    # For omega z:
+    
+    x = ref['x'] 
+    y = ref['y']
+    
+    nuy = np.gradient(n_u[0], y, axis = 1, edge_order=2)
+
+    nvx = np.gradient(n_u[1], x, axis = 2, edge_order=2)
+    omega_z_noise = nvx - nuy
+    
+    print(omega_z_noise.shape, omega_z.shape)
+    omega_n,_ = pearsonr(omega_z_noise[0].flatten(),omega_z.flatten())
+
+    print(f"AS noise level = {noise_level}, R_Omega = {omega_n:.4f}")
