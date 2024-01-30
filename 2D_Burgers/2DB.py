@@ -20,13 +20,26 @@ nt, ny, nx = u.shape
 
 dt = 0.0001 * 20
 t = np.arange(0, nt) * dt
+
+Nu  = len(u.flatten())
+Nt  = len(t.flatten())
+
+print(f"Total Data: NU = {Nu}, Nt = {Nt}")
 t = t[::10]
 
 u = u[::10].transpose((1, 2, 0))
 v = v[::10].transpose((1, 2, 0))
 
+
+Nu  = len(u.flatten())
+Nt  = len(t.flatten())
+
+
+print(f"Training Data: NU = {Nu}, Nt = {Nt}")
 x = np.linspace(0, 1, nx, endpoint=True)
 y = np.linspace(0, 1, ny, endpoint=True)
+
+print(u.shape, v.shape, )
 
 xx, yy = np.meshgrid(x, y)
 #%%
@@ -41,7 +54,7 @@ cp = lb + (ub-lb) * lhs(3, 20000)
 ns = len(xx.flatten())
 
 ic = np.array([xx.flatten(), yy.flatten(), np.zeros((ns,)) + t[0],
-               u[:, :, 0].flatten(), v[:, :, 0].flatten()]).T
+                u[:, :, 0].flatten(), v[:, :, 0].flatten()]).T
 
 pr = 0.1
 ind_ic = np.random.choice([False, True], len(ic), p=[1 - pr, pr])

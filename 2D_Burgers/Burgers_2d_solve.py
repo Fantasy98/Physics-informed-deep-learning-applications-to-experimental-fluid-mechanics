@@ -2,7 +2,7 @@ import scipy.io
 from Solver import FDM_Burgers
 
 
-ic = scipy.io.loadmat('./ICs/IC_Burgers.mat')
+ic = scipy.io.loadmat('ICs/IC_Burgers.mat')
 U = ic['IC'][0, 0]
 V = ic['IC'][0, 1]
 
