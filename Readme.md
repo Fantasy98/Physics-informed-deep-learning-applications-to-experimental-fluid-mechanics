@@ -11,10 +11,6 @@ The code was run successfully using Tensorflow>=2.6.0, using 1 GPU for training.
 ## Data
 The dataset used for training and testing are available in order to ensure the reproducibility of the results. 
 
-In this repository, the database for *zero-presure-gradient* Boundary Layer  and turbulent flows over NACA4412 airfoil  are required to be downloaded manually. 
-
-The links of file have been provided in [**ZPG**](https://github.com/Fantasy98/Physics-informed-neural-networks-for-solving-Reynolds-averaged-Navier-Stokes-equations/blob/24c0f8be7af94de8128bb08f589e5a77347ca36c/ZPG/data/Link.md) and [**NACA**](https://github.com/Fantasy98/Physics-informed-neural-networks-for-solving-Reynolds-averaged-Navier-Stokes-equations/blob/24c0f8be7af94de8128bb08f589e5a77347ca36c/NACA4412/data/Link.md)
-
 Please, get in touch using the email address for correspondance in the paper to arrange the transfer. 
 
 ##  Training and inference

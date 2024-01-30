@@ -1,0 +1,68 @@
+INFO: Start training for cyliner_nl4_nn20_Gn5.0
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 3)]               0         
+                                                                 
+ dense (Dense)               (None, 20)                80        
+                                                                 
+ dense_1 (Dense)             (None, 20)                420       
+                                                                 
+ dense_2 (Dense)             (None, 20)                420       
+                                                                 
+ dense_3 (Dense)             (None, 20)                420       
+                                                                 
+ dense_4 (Dense)             (None, 3)                 63        
+                                                                 
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =         1403     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+ 1403  20887  22620      1     0     0   1.245D-04   9.997D-04
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+None
+INFO: Start training for cyliner_nl4_nn60_Gn5.0
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 3)]               0         
+                                                                 
+ dense (Dense)               (None, 20)                80        
+                                                                 
+ dense_1 (Dense)             (None, 20)                420       
+                                                                 
+ dense_2 (Dense)             (None, 20)                420       
+                                                                 
+ dense_3 (Dense)             (None, 20)                420       
+                                                                 
+ dense_4 (Dense)             (None, 3)                 63        
+                                                                 
+=================================================================
+Total params: 1,403
+Trainable params: 1,403
+Non-trainable params: 0
+_________________________________________________________________
