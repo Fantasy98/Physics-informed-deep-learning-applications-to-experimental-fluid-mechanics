@@ -6,12 +6,12 @@ Hyper Parameter tunning
 import numpy as np
 from scipy.io import loadmat
 from pyDOE import lhs
+import tensorflow as tf 
 from tensorflow.keras import models, layers, optimizers, activations
 from tensorflow.keras import backend as K 
 from PINN_cylinder import PINN
 from time import time
-import os
-
+import os 
 data_path  = 'tune_data/'
 model_path = 'tune_model/'
 from pathlib import Path
@@ -86,23 +86,24 @@ nv = 3 #(u, v, p)
 
 
 sw  = 1 
-uw  = 10 
+uw  = 1
 NL  = [4,  6,  10]
 NN  = [20, 60, 100]
 
 for nl in NL:
     for nn in NN:
-        
+        # sp, cp, grid = get_data(c)
         case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
-        print(f"INFO: Start training for {case_name}")
         if os.path.exists(data_path + "res_" + case_name + '.npz'):
+            print(f"EXISTS: {case_name}")
             continue
         else:
+            print(f"INFO: Start training for {case_name}")
             act = activations.tanh
             inp = layers.Input(shape = (3,))
             hl = inp
-            for i in range(4):
-                hl = layers.Dense(20, activation = act)(hl)
+            for i in range(nl):
+                hl = layers.Dense(nn, activation = act)(hl)
             out = layers.Dense(nv)(hl)
 
             model = models.Model(inp, out)
@@ -129,7 +130,7 @@ for nl in NL:
             np.savez_compressed(data_path + 'res_' + case_name + '.npz', up = up, hist = hist, comp_time=comp_time)
             model.save(model_path + case_name + '.h5')
             
-            del model, up, pinn, opt, inp, hl, out
+            del model, hist
             model   = None 
             up      = None 
             pinn    = None
@@ -137,5 +138,7 @@ for nl in NL:
             inp     = None 
             hl      = None 
             out     = None
+            hist    = None
 
-        K.clear_session()
+            K.clear_session()
+            quit()
