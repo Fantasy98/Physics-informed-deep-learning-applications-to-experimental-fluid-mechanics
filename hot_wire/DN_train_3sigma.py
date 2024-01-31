@@ -58,20 +58,17 @@ for il in range(npts):
         if jl == 1:
             
             norm_val = ds[il,jl]/utau 
-            norm_val = ds[il,jl]/utau 
+            # norm_val = ds[il,jl]/utau 
         else: 
             norm_val = ds[il,jl]/utau**2
-            
+        
         sigma = noise_level * (norm_val)/3
         noise = np.random.normal(loc=mu,scale=np.abs(sigma))
         print(f"At Sigma = {sigma:.3f}\t noise = {noise:.3f}")
-
         ds[il,jl] += noise
 
 u = ds[:,1]/u_max   ;uv = -ds[0:,2]; uu = ds[0:,3]
 vv = ds[0:,4] ;ww = ds[0:,5] ; 
-
-
 
 gn = np.array([u,uu,vv,uv]).T
 
