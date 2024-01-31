@@ -103,7 +103,7 @@ for sw in SW:
             print(f"EXISTS: {case_name}")
             continue
         else:
-            print(f"INFO: Start training for {case_name}")
+            print(f"\nINFO: Start training for {case_name}\n")
             act = activations.tanh
             inp = layers.Input(shape = (3,))
             hl = inp

@@ -55,7 +55,7 @@ for n in Names:
 
 if args.m =='arch':
     sw  = 1
-    uw  = 10 
+    uw  = 1
     NL  = [4,  6,  10]
     NN  = [20, 60, 100]
     for nl in NL:
@@ -84,7 +84,7 @@ if args.m =='arch':
     df = pd.DataFrame(error_dict)
     df.to_csv("cylinder_tune_arch.csv")
 else:
-    nl  = 4 
+    nl  = 4
     nn  = 20 
     SW  = [1,  5,  10]
     UW  = [1,  5,  10]
@@ -93,8 +93,8 @@ else:
         for uw in UW :
             case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
             print(f"INFO: Testing\t{case_name}")
-            p   = np.load(data_path + "res_" + case_name + ".npz")
-            u_pinn = p['up']
+            dp   = np.load(data_path + "res_" + case_name + ".npz")
+            u_pinn = dp['up']
             u_pinn[2] = u_pinn[2] - u_pinn[2].mean() + p.mean()
             e_pinn = error(u, u_pinn).mean(1)
 
@@ -103,8 +103,10 @@ else:
             error_dict['sw'].append(sw)
             error_dict['uw'].append(uw)
 
-            for i in len(Names):
+            for i in range(len(Names)-1):
                 error_dict[Names[i]].append(e_pinn[i])
+            error_dict['Avg'].append(e_pinn.mean())
+            
     for n in Names:
         error_dict[n] = np.array(error_dict[n])
     for i in items:

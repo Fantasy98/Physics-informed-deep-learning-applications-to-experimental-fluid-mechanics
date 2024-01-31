@@ -43,6 +43,7 @@ if args.m =='arch':
 
     il = 0 
     jl = 0
+    maxlen =0
     colors = ['b','r','g']
     for il, nl in enumerate(NL):
         for jl, nn in enumerate(NN):
@@ -60,23 +61,25 @@ if args.m =='arch':
             for i in range(len(Names)):
                 error_dict[Names[i]].append(hist[-1,i])
             
-            if il == 1:
-                ax.semilogy(hist[:,0],'-',c=colors[jl], label = case_name)
-                ax.semilogy(hist[:,1],'--',c=colors[jl], label = case_name)
+            if il == 1 :
+                # ax.semilogy(hist[:,0],'-',c=colors[jl], label = case_name)
+                # ax.semilogy(hist[:,1],'--',c=colors[jl], label = case_name)
                 ax.semilogy(hist[:,2],'-.', c=colors[jl], label = case_name)
-            # ax.set_xlim)
+                if len(hist) >= maxlen:
+                    maxlen = len(hist)
 
-            ax.set_xlabel("Epochs")
-            ax.set_ylabel("Loss")
-            rect_width = 0.2 * (ax.get_xlim()[1] - ax.get_xlim()[0])
-            rect_height = ax.get_ylim()[1] - ax.get_ylim()[0]
-            # rect_left = ax.get_xlim()[0] + 0.4 * (ax.get_xlim()[1] - ax.get_xlim()[0])
-            rect_left = ax.get_xlim()[0] 
-
-            # Create a rectangle with a different color
-            ax.add_patch(plt.Rectangle((rect_left, ax.get_ylim()[0]), rect_width, rect_height, color='#e6f7ff', alpha=0.5))
             
     plt.legend()
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("Loss")
+    ax.set_xlim([0-1,maxlen*1.05])
+    rect_width = (1000/maxlen) * (ax.get_xlim()[1] - ax.get_xlim()[0])
+    rect_height = ax.get_ylim()[1] - ax.get_ylim()[0]
+    # rect_left = ax.get_xlim()[0] + 0.4 * (ax.get_xlim()[1] - ax.get_xlim()[0])
+    rect_left = ax.get_xlim()[0]
+    # Create a rectangle with a different color
+    ax.add_patch(plt.Rectangle((0, ax.get_ylim()[0]), rect_width, rect_height, color='#e6f7ff', alpha=0.5))
+            
     plt.savefig('loss_trend.jpg',bbox_inches='tight',dpi=300)
 
             
