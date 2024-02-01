@@ -46,10 +46,11 @@ if args.m =='arch':
     jl = 0
     maxlen1 =0
     maxlen2 =0
-    colors = [cc.blue, cc.red, cc.yellow]
-    colors2 = [cc.green, cc.red, cc.brown]
+    colors = [cc.red, cc.blue, cc.yellow]
+    colors2 = [cc.blue, cc.yellow, cc.red]
     fig1, ax = plt.subplots(1, 1, figsize=(6,4))
     fig2, ax2 = plt.subplots(1, 1, figsize=(6,4))
+
     for il, nl in enumerate(NL):
         for jl, nn in enumerate(NN):
             print(il, jl )
@@ -80,7 +81,7 @@ if args.m =='arch':
                 ax2.semilogy(np.arange(len(hist)),
                             hist[:,2],
                             '-', 
-                            c=colors[il],
+                            c=colors2[il],
                             label = label_name,
                             lw = 2)
 
@@ -117,8 +118,8 @@ else:
     UW  = [1,  5,  10]
     maxlen1 =0
     maxlen2 =0
-    colors = [cc.blue, cc.red, cc.yellow]
-    colors2 = [cc.green, cc.red, cc.purple]
+    colors = [cc.blue, cc.yellow, cc.red]
+    colors2 = [cc.red, cc.yellow, cc.blue]
     fig1, ax = plt.subplots(1, 1, figsize=(6,4))
     fig2, ax2 = plt.subplots(1, 1, figsize=(6,4))
     for il, sw in enumerate(SW):
@@ -143,7 +144,7 @@ else:
                             label = label_name,
                             lw = 2)
 
-            if jl == 0:
+            if jl == 2:
                 
                 label_name = f"l = {nl}, n = {nn}, " + r"$\alpha$" + f" = {sw}, " + r"$\beta$" + f" = {uw}"  
                 if len(hist[:,2]) > maxlen2:
@@ -151,7 +152,7 @@ else:
                 ax2.semilogy(np.arange(len(hist)),
                             hist[:,2],
                             '-', 
-                            c=colors[il],
+                            c=colors2[il],
                             label = label_name,
                             lw = 2)
 

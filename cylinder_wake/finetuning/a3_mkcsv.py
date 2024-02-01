@@ -55,7 +55,7 @@ for n in Names:
 
 if args.m =='arch':
     sw  = 1
-    uw  = 10
+    uw  = 1
     NL  = [4,  6,  10]
     NN  = [20, 60, 100]
     for nl in NL:
@@ -84,7 +84,7 @@ if args.m =='arch':
         error_dict[i] = np.array(error_dict[i])
     
     df = pd.DataFrame(error_dict)
-    df.to_csv("cylinder_tune_arch.csv")
+    df.to_csv(f"cylinder_tune_arch_sw{sw}_uw{uw}.csv")
 else:
     nl  = 4
     nn  = 20 
@@ -118,4 +118,4 @@ else:
     
     
     df = pd.DataFrame(error_dict)
-    df.to_csv("cylinder_tune_para.csv")
+    df.to_csv(f"cylinder_tune_para_nl{nl}_nn{nn}.csv")
