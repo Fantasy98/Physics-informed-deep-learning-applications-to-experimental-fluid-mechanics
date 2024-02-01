@@ -6,6 +6,8 @@ from time import time
 import argparse
 import os 
 from pathlib import Path
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 argparser   = argparse.ArgumentParser()
 argparser.add_argument("--t",default=5,type=int, help="The number of points sampled from Time")
 argparser.add_argument("--s",default=8,type=int, help="The number of points sampled from Space")
@@ -79,15 +81,21 @@ c       = args.c # std of gaussian noise
 
 sp, cp, grid = get_data(n_time, n_space, c)
 #%% model training 
-sw  = 1 
-uw  = 1
-NL  = [4,  6,  10]
-NN  = [20, 60, 100]
+# sw  = 1 
+# uw  = 1
+# NL  = [4,  6,  10]
+# NN  = [20, 60, 100]
 nv = 4 #(u, v, w, p)
     
 
-for nl in NL: 
-    for nn in NN:
+nl = 6 
+nn = 100 
+
+SW = [1, 5, 10 ]
+UW = [1, 5, 10 ]
+
+for sw in SW: 
+    for uw in UW:
 
         case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{args.t}_s{args.s}_Gn{c}"
         
@@ -95,7 +103,6 @@ for nl in NL:
             print(f"EXISTS: {case_name}")
             continue
         else:
-            print(f"\nINFO: {case_name}\n")
             act = activations.tanh
             inp = layers.Input(shape = (4,))
             hl = inp

@@ -17,27 +17,20 @@ Path(data_path).mkdir(exist_ok= True)
 Path(model_path).mkdir(exist_ok= True)
 
 def error(u, up):
-    return np.linalg.norm((u - up), axis = (1, 2))/np.linalg.norm(u, axis = (1, 2)) * 100
+    error= np.linalg.norm((u - up), axis = (0, 1))/np.linalg.norm(u, axis = (0, 1)) * 100
+    return error.mean()
 
-data = loadmat('../data/cylinder_nektar_wake.mat')
-u = data['U_star'][:, 0]
-v = data['U_star'][:, 1]
-p = data['p_star']
+ref = np.load('../data/min_channel_sr.npz')
 
-u = u.reshape((-1, 100, 200))
-v = v.reshape((-1, 100, 200))
-p = p.reshape((-1, 100, 200))
-x = data['X_star'][:, 0]
-y = data['X_star'][:, 1]
-t = data['t']
-x = x.reshape((-1, 100))
-y = y.reshape((-1, 100))
-nt = 71
-u = u[:, :, :nt]
-v = v[:, :, :nt]
-p = p[:, :, :nt]
-u = np.stack((u, v, p), axis = 0)
-c   = 5.0
+x = ref['x'] 
+y = ref['y']
+z = ref['z']
+u = ref['u'] # dimensions  = (nz, ny, nx, nt)
+v = ref['v']
+w = ref['w']
+t = ref['t']
+
+u = np.stack([u, v, w])
 
 
 
@@ -48,9 +41,13 @@ for i in items:
     error_dict[i] = []
 
 
-Names = ["E_U", "E_V", "E_P",'Avg']
+Names = ["E_U", "E_V", "E_W",'time','Avg']
 for n in Names:
     error_dict[n] = []
+
+c = 0 
+t = 5 
+s = 8 
 
 
 if args.m =='arch':
@@ -60,21 +57,25 @@ if args.m =='arch':
     NN  = [20, 60, 100]
     for nl in NL:
         for nn in NN:
-            case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
+            case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{t}_s{s}_Gn{c}"
+
             print(f"INFO: Testing\t{case_name}")
             dp   = np.load(data_path + "res_" + case_name + ".npz")
-            u_pinn = dp['up']
-            u_pinn[2] = u_pinn[2] - u_pinn[2].mean() + p.mean()
-            e_pinn = error(u, u_pinn).mean(1)
-            print(e_pinn)
+            u_pinn = dp['up'][:3]
+            ctime  = dp['comp_time']
+            
             error_dict['nn'].append(nn)
             error_dict['nl'].append(nl)
             error_dict['sw'].append(sw)
             error_dict['uw'].append(uw)
 
-            for i in range(len(Names)-1):
-                error_dict[Names[i]].append(e_pinn[i])
-            error_dict['Avg'].append(e_pinn.mean())
+            for i in range(len(Names)-2):
+                e_pinn = error(u[i], u_pinn[i])
+                print(e_pinn)
+                error_dict[Names[i]].append(np.round(e_pinn,2))
+            
+            error_dict['Avg'].append(np.round(e_pinn.mean(),2))
+            error_dict['time'].append(np.round(ctime,2))
             
     for n in Names:
         error_dict[n] = np.array(error_dict[n])
@@ -95,6 +96,7 @@ else:
             print(f"INFO: Testing\t{case_name}")
             dp   = np.load(data_path + "res_" + case_name + ".npz")
             u_pinn = dp['up']
+            ctime  = dp['comp_time']
             u_pinn[2] = u_pinn[2] - u_pinn[2].mean() + p.mean()
             e_pinn = error(u, u_pinn).mean(1)
 
@@ -104,9 +106,9 @@ else:
             error_dict['uw'].append(uw)
 
             for i in range(len(Names)-1):
-                error_dict[Names[i]].append(e_pinn[i])
-            error_dict['Avg'].append(e_pinn.mean())
-            
+                error_dict[Names[i]].append(np.round(e_pinn[i],2))
+            error_dict['Avg'].append(np.round(e_pinn.mean(),2))
+            error_dict['time'].append(np.round(ctime,2))
     for n in Names:
         error_dict[n] = np.array(error_dict[n])
     for i in items:
