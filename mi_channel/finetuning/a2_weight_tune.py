@@ -88,7 +88,7 @@ sp, cp, grid = get_data(n_time, n_space, c)
 nv = 4 #(u, v, w, p)
     
 
-nl = 6 
+nl = 10 
 nn = 100 
 
 SW = [1, 5, 10 ]
@@ -103,6 +103,7 @@ for sw in SW:
             print(f"EXISTS: {case_name}")
             continue
         else:
+            print(f"\nSTART: {case_name}\n")
             act = activations.tanh
             inp = layers.Input(shape = (4,))
             hl = inp

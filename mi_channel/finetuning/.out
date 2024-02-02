@@ -1,0 +1,30 @@
+EXISTS: channel_nl6_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl6_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl6_nn100_sw1_uw10_t5_s8_Gn0
+EXISTS: channel_nl6_nn100_sw5_uw1_t5_s8_Gn0
+EXISTS: channel_nl6_nn100_sw5_uw5_t5_s8_Gn0
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 51,404
+Trainable params: 51,404
+Non-trainable params: 0
+_________________________________________________________________

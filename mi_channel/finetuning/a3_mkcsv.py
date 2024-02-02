@@ -69,12 +69,14 @@ if args.m =='arch':
             error_dict['sw'].append(sw)
             error_dict['uw'].append(uw)
 
+            es = np.empty(shape=(3,))
             for i in range(len(Names)-2):
-                e_pinn = error(u[i], u_pinn[i])
-                print(e_pinn)
+                e_pinn = error(u[i],u_pinn[i])
                 error_dict[Names[i]].append(np.round(e_pinn,2))
+                es[i] = e_pinn
+
+            error_dict['Avg'].append(np.round(es.mean(),2))
             
-            error_dict['Avg'].append(np.round(e_pinn.mean(),2))
             error_dict['time'].append(np.round(ctime,2))
             
     for n in Names:
@@ -83,37 +85,41 @@ if args.m =='arch':
         error_dict[i] = np.array(error_dict[i])
     
     df = pd.DataFrame(error_dict)
-    df.to_csv("cylinder_tune_arch.csv")
+    df.to_csv("channel_tune_arch.csv")
 else:
-    nl  = 4
-    nn  = 20 
+    nl  = 10
+    nn  = 100 
     SW  = [1,  5,  10]
     UW  = [1,  5,  10]
 
     for sw in SW:
         for uw in UW :
-            case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
+            case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{t}_s{s}_Gn{c}"
+            # print(f"INFO: Testing\t{case_name}")
             print(f"INFO: Testing\t{case_name}")
             dp   = np.load(data_path + "res_" + case_name + ".npz")
-            u_pinn = dp['up']
+            u_pinn = dp['up'][:3]
             ctime  = dp['comp_time']
-            u_pinn[2] = u_pinn[2] - u_pinn[2].mean() + p.mean()
-            e_pinn = error(u, u_pinn).mean(1)
-
+            
             error_dict['nn'].append(nn)
             error_dict['nl'].append(nl)
             error_dict['sw'].append(sw)
             error_dict['uw'].append(uw)
 
-            for i in range(len(Names)-1):
-                error_dict[Names[i]].append(np.round(e_pinn[i],2))
-            error_dict['Avg'].append(np.round(e_pinn.mean(),2))
+            es = np.empty(shape=(3,))
+            for i in range(len(Names)-2):
+                e_pinn = error(u[i],u_pinn[i])
+                error_dict[Names[i]].append(np.round(e_pinn,2))
+                es[i] = e_pinn
+
+            error_dict['Avg'].append(np.round(es.mean(),2))
+            
             error_dict['time'].append(np.round(ctime,2))
+            
     for n in Names:
         error_dict[n] = np.array(error_dict[n])
     for i in items:
         error_dict[i] = np.array(error_dict[i])
     
-    
     df = pd.DataFrame(error_dict)
-    df.to_csv("cylinder_tune_para.csv")
+    df.to_csv("channel_tune_para.csv")

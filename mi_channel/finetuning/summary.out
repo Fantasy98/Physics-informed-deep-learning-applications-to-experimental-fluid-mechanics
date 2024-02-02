@@ -1,0 +1,524 @@
+We at 1
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  36312  38716      1     0     0   4.014D-06   2.732D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 2
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  35327  37653      1     0     0   6.048D-06   2.578D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 3
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw5_uw1_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  40453  43300      1     0     0   5.650D-06   2.559D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 4
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw1_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw5_uw5_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  35276  37579      1     0     0   5.434D-06   2.774D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 5
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw5_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw5_uw10_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  37500  40067      1     0     0   9.068D-06   2.600D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 6
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw10_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw10_uw1_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  36214  38626      1     0     0   4.245D-06   2.574D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 7
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw10_uw1_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw10_uw5_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  46179  49251      1     2     0   6.359D-06   1.686D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+We at 8
+EXISTS: channel_nl10_nn100_sw1_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw1_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw5_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw5_uw10_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw10_uw1_t5_s8_Gn0
+EXISTS: channel_nl10_nn100_sw10_uw5_t5_s8_Gn0
+
+START: channel_nl10_nn100_sw10_uw10_t5_s8_Gn0
+
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 4)]               0         
+                                                                 
+ dense (Dense)               (None, 100)               500       
+                                                                 
+ dense_1 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_2 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_3 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_4 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_5 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_6 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_7 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_8 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_9 (Dense)             (None, 100)               10100     
+                                                                 
+ dense_10 (Dense)            (None, 4)                 404       
+                                                                 
+=================================================================
+Total params: 91,804
+Trainable params: 91,804
+Non-trainable params: 0
+_________________________________________________________________
+None
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =        91804     M =           50
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+91804  39004  41791      1     0     0   1.315D-05   3.098D-06
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
