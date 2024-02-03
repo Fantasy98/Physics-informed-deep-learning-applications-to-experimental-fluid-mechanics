@@ -35,25 +35,24 @@ Names = [ "l_tot","l_s", "l_e"]
 for n in Names:
     error_dict[n] = []
 
-c = 5.0
+t = 5 
+s = 8 
+c = 0
 
 if args.m =='arch':
     sw  = 1
-    uw  = 10
+    uw  = 1
     maxlen1 =0
     maxlen2 =0
     
-    colors = [cc.red, cc.blue, cc.yellow]
-    colors2 = [cc.blue, cc.yellow, cc.red]
-    fig1, ax = plt.subplots(1, 1, figsize=(6,4))
-    nn = 20 
-    NL = [4,6,10]
-
     colors = [cc.black, cc.red, cc.yellow]
     linestyle = ['--','-','-']
-    
+    fig1, ax = plt.subplots(1, 1, figsize=(6,4))
+    nn = 100 
+    NL = [4,6,10]
+
     for il, nl in enumerate(NL):
-        case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
+        case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{t}_s{s}_Gn{c}"
         print(f"INFO: Testing\t{case_name}")
         dp   = np.load(data_path + "res_" + case_name + ".npz")
         hist = dp['hist']
@@ -75,20 +74,20 @@ if args.m =='arch':
     rect_height = ax.get_ylim()[1] - ax.get_ylim()[0]
     rect_left = ax.get_xlim()[0]
     ax.add_patch(plt.Rectangle((0, ax.get_ylim()[0]), rect_width, rect_height, color='#e6f7ff', alpha=1))
-    fig1.savefig('Figs/cylinder_loss_trend_nn.pdf',bbox_inches='tight',dpi=300)
+    fig1.tight_layout()
+    fig1.savefig('Figs/channel_loss_trend_nn.pdf',bbox_inches='tight',dpi=1000)
     
 
 
-    nl = 4  
+    nl = 10  
     NN = [20,60,100]   
-    colors = [ cc.black, cc.blue, cc.cyan]
-    linestyle = ['--','-','-']
-    
+    colors = [ cc.blue, cc.cyan, cc.black]
+    linestyle = ['-','-','--']
     fig2, ax2 = plt.subplots(1, 1, figsize=(6,4))
     for jl, nn in enumerate(NN):
 
         label_name = f"l = {nl}, n = {nn}, " + r"$\alpha$" + f" = {sw}, " + r"$\beta$" + f" = {uw}"  
-        case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
+        case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{t}_s{s}_Gn{c}"
         print(f"INFO: Testing\t{case_name}")
         dp   = np.load(data_path + "res_" + case_name + ".npz")
         hist = dp['hist']
@@ -110,27 +109,27 @@ if args.m =='arch':
     rect_height = ax2.get_ylim()[1] - ax2.get_ylim()[0]
     rect_left = ax2.get_xlim()[0]
     ax2.add_patch(plt.Rectangle((0, ax2.get_ylim()[0]), rect_width, rect_height, color='#e6f7ff', alpha=1))    
-    fig2.savefig('Figs/cylinder_loss_trend_nl.pdf',bbox_inches='tight',dpi=300)
+    fig1.tight_layout()
+    fig2.savefig('Figs/channel_loss_trend_nl.pdf',bbox_inches='tight',dpi=1000)
     
 
 
 else:
-    nn  = 20
-    nl  = 4 
+    nn  = 100
+    nl  = 10
     maxlen1 =0
     maxlen2 =0
     
-    colors = [cc.red, cc.blue, cc.yellow]
+    colors = [cc.black, cc.brown, cc.purple]
+    linestyle = ['--','-','-']
     fig1, ax = plt.subplots(1, 1, figsize=(6,4))
     
 
     sw = 1 
-    # UW = [10,5,1]
     UW = [1,5,10]
-    colors = [cc.brown, cc.purple,cc.black]
-    linestyle = ['-','-','--']
+    
     for il, uw in enumerate(UW):
-        case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
+        case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{t}_s{s}_Gn{c}"
         print(f"INFO: Testing\t{case_name}")
         dp   = np.load(data_path + "res_" + case_name + ".npz")
         hist = dp['hist']
@@ -152,20 +151,23 @@ else:
     rect_height = ax.get_ylim()[1] - ax.get_ylim()[0]
     rect_left = ax.get_xlim()[0]
     ax.add_patch(plt.Rectangle((0, ax.get_ylim()[0]), rect_width, rect_height, color='#e6f7ff', alpha=1))
-    fig1.savefig('Figs/cylinder_loss_trend_uw.pdf',bbox_inches='tight',dpi=300)
+    fig1.savefig('Figs/channel_loss_trend_uw.pdf',bbox_inches='tight',dpi=300)
     
 
 
-    uw = 10
+    uw = 1
     SW = [1,5,10]   
+    
+
     linestyle = ['--','-','-']
     colors = [cc.black, cc.green, cc.orange]
 
+    # linestyle = ['--','-','-']
     fig2, ax2 = plt.subplots(1, 1, figsize=(6,4))
     for jl, sw in enumerate(SW):
 
         label_name = f"l = {nl}, n = {nn}, " + r"$\alpha$" + f" = {sw}, " + r"$\beta$" + f" = {uw}"  
-        case_name = f"cyliner_nl{nl}_nn{nn}_sw{sw}_uw{uw}_Gn{c}"
+        case_name = f"channel_nl{nl}_nn{nn}_sw{sw}_uw{uw}_t{t}_s{s}_Gn{c}"
         print(f"INFO: Testing\t{case_name}")
         dp   = np.load(data_path + "res_" + case_name + ".npz")
         hist = dp['hist']
@@ -187,6 +189,6 @@ else:
     rect_height = ax2.get_ylim()[1] - ax2.get_ylim()[0]
     rect_left = ax2.get_xlim()[0]
     ax2.add_patch(plt.Rectangle((0, ax2.get_ylim()[0]), rect_width, rect_height, color='#e6f7ff', alpha=1))    
-    fig2.savefig('Figs/cylinder_loss_trend_sw.pdf',bbox_inches='tight',dpi=300)
+    fig2.savefig('Figs/channel_loss_trend_sw.pdf',bbox_inches='tight',dpi=300)
     
 
