@@ -74,6 +74,53 @@ def PSD(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, dir=0):
     
     return fourier_amplitudes_targ, Lambda_x, Lambda_z
 
+
+
+def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, dir=0):
+    import numpy as np
+    
+    # Fluctuation
+    for i in range(nt):
+        data[:,:,:,:,i] = data[:,:,:,:,i] - np.average(data,-1)
+    data = np.average(data,-1)
+    
+    # Wavenumber spacing
+    dkx = 2*np.pi/Lx
+    dky = 2*np.pi/Ly
+    dkz = 2*np.pi/Lz
+
+    x_range=np.linspace(1e-3,Lx,Nx)
+    y_range=np.linspace(1e-3,Ly,Ny)
+    z_range=np.linspace(1e-3,Lz,Nz)
+    
+    kx = dkx * np.append(x_range[:Nx//2], -x_range[Nx//2:0:-1])
+    ky = dky * np.append(y_range[:Ny//2], -y_range[Ny//2:0:-1])
+    kz = dkz * np.append(z_range[:Nz//2], -z_range[Nz//2:0:-1])
+    
+    [kkx,kky,kkz]=np.meshgrid(kx,ky,kz)
+    kkx_norm = np.sqrt(kkx**2)
+    kky_norm = np.sqrt(kky**2)
+    kkz_norm = np.sqrt(kkz**2)
+    
+    Re_Tau = 202 #Direct from simulation
+    Re = 5000 #Direct from simulation
+    nu = 1/Re #Kinematic viscosity
+    u_tau = Re_Tau*nu
+    Lambda_x = (2*np.pi/kkx_norm)*u_tau/nu
+    Lambda_y = (2*np.pi/kky_norm)*u_tau/nu
+    Lambda_z = (2*np.pi/kkz_norm)*u_tau/nu
+
+
+    # We compute the 2 dimensional discrete Fourier Transform
+    fourier_image_targ = np.fft.fftn(data)
+    # We also compute the pre-multiplication with the wavenumber vectors
+    # print(fourier_image_targ.shape, kkx.shape, kkz.shape)
+    # fourier_amplitudes_targ = np.mean(np.absolute(fourier_image_targ)**2,axis=0)*kkx*kkz
+    fourier_amplitudes_targ = np.sum(np.abs(fourier_image_targ)**2,axis=0)*kkx*kky*kkz
+    
+    return fourier_amplitudes_targ 
+
+
 plt.rc('text', usetex = True)
 plt.rc('font', family = 'serif')
 plt.rc('axes', labelsize = 16, linewidth = 1)
