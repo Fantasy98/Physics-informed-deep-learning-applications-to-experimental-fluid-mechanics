@@ -13,12 +13,15 @@ from numpy import fft
 from utils.plot import colorplate as cc
 from utils import plt_rc_setup
 
-font_dict = {"fontsize":25,'weight':'bold'}
 
 def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
     import numpy as np
-    
-    yp = 40
+    Re_Tau = 202 #Direct from simulation
+    Re = 5000 #Direct from simulation
+    nu = 1/Re #Kinematic viscosity
+    u_tau = Re_Tau*nu
+    eta = 1/Re**-0.75
+    yp = 30
     utype = 0
     # Streamwise velocity at wall
     data = data[utype]
@@ -28,7 +31,7 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
     data    = data[:,yp,:,:]
     # Fluctuation
     # Wavenumber spacing
-    dkx = 2*np.pi/Lx
+    dkx = 2*np.pi/Lx / eta
     dky = 2*np.pi/Ly
     dkz = 2*np.pi/Lz
 
@@ -45,12 +48,8 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
     ky = np.sqrt(ky**2)
     kz = np.sqrt(kz**2)
 
-    Re_Tau = 202 #Direct from simulation
-    Re = 5000 #Direct from simulation
-    nu = 1/Re #Kinematic viscosity
-    u_tau = Re_Tau*nu
-    eta = 1/Re**-0.75
-    Lambda_x =kx * eta 
+   
+    Lambda_x =kx * eta
     Lambda_y =ky
     Lambda_z =kz
     spectra = np.empty(shape=(Nx,nt))
@@ -78,6 +77,7 @@ plt.rc('font', size = 16)
 plt.rc('legend', fontsize = 16)              
 plt.rc('xtick', labelsize = 16)             
 plt.rc('ytick', labelsize = 16)
+font_dict = {"fontsize":20,'weight':'bold'}
 
 
 ref = np.load('../data/min_channel_sr.npz')
@@ -107,31 +107,6 @@ u_pred1 = pred1['up'][:3]
 
 pred2 = np.load('../results/res_pinn_t3_s8.npz')
 u_pred2 = pred2['up'][:3]
-
-uy = np.gradient(u[0], y, axis = 1, edge_order=2)
-uz = np.gradient(u[0], z, axis = 0, edge_order=1)
-
-vx = np.gradient(u[1], x, axis = 2, edge_order=2)
-vz = np.gradient(u[1], z, axis = 0, edge_order=1)
-
-wx = np.gradient(u[2], x, axis = 2, edge_order=2)
-wy = np.gradient(u[2], y, axis = 1, edge_order=2)
-
-omega_z = vx - uy
-
-uy_pred1 = np.gradient(u_pred1[0], y, axis = 1, edge_order=2)
-uz_pred1 = np.gradient(u_pred1[0], z, axis = 0, edge_order=1)
-
-vx_pred1 = np.gradient(u_pred1[1], x, axis = 2, edge_order=2)
-vz_pred1 = np.gradient(u_pred1[1], z, axis = 0, edge_order=1)
-
-wx_pred1 = np.gradient(u_pred1[2], x, axis = 2, edge_order=2)
-wy_pred1 = np.gradient(u_pred1[2], y, axis = 1, edge_order=2)
-
-omega_z_pred1 = vx_pred1 - uy_pred1
-
-x = xx[0]
-y = yy[0]
 
 t      = 5 
 yp     = 0
@@ -204,8 +179,8 @@ axs.loglog(
 
 axs.set_ylabel(r"$E_{u}(k)$",font_dict )
 axs.set_xlabel(r"$k\eta$", font_dict)   
-axs.set_ylim(10e-7, 10e0)
-axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=12)
+axs.set_ylim(5 * 10e-7, 10e0)
+axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
 
 # axs.set_xticks([wvnumber.min(), 0.5 * wvnumber.max(), wvnumber.max()])
 
