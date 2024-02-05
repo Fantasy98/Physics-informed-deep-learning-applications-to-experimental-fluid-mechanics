@@ -14,15 +14,20 @@ from utils.plot import colorplate as cc
 from utils import plt_rc_setup
 
 
-def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
+def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     import numpy as np
     Re_Tau = 202 #Direct from simulation
     Re = 5000 #Direct from simulation
     nu = 1/Re #Kinematic viscosity
     u_tau = Re_Tau*nu
     eta = 1/Re**-0.75
-    yp = 30
-    utype = 0
+
+    yp =  30
+    y_loc = Ly * (yp/Ny)
+    print(f"At y = {y_loc}")
+    # print(yp)
+
+    # utype = 2
     # Streamwise velocity at wall
     data = data[utype]
     for t in range(nt):
@@ -31,9 +36,9 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
     data    = data[:,yp,:,:]
     # Fluctuation
     # Wavenumber spacing
-    dkx = 2*np.pi/Lx / eta
-    dky = 2*np.pi/Ly
-    dkz = 2*np.pi/Lz
+    dkx = 2*np.pi/(Lx) 
+    dky = 2*np.pi/(Ly)
+    dkz = 2*np.pi/(Lz)
 
     # Wave number 
     x_range =  dkx *  np.linspace(-Nx/2 , Nx/2 -1, Nx)
@@ -44,25 +49,26 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
     ky = dky * np.append(y_range[:Ny//2], -y_range[Ny//2:0:-1])
     kz = dkz * np.append(z_range[:Nz//2], -z_range[Nz//2:0:-1])
 
-    kx = np.sqrt(kx**2)
-    ky = np.sqrt(ky**2)
-    kz = np.sqrt(kz**2)
+    # kx = np.sqrt((kx)**2)
+    # ky = np.sqrt((ky)**2)
+    # kz = np.sqrt((kz)**2)
 
-   
-    Lambda_x =kx * eta
-    Lambda_y =ky
-    Lambda_z =kz
+    Lambda_x = kx * eta
+    Lambda_y = ky * eta
+    Lambda_z = kz * eta
     spectra = np.empty(shape=(Nx,nt))
     for t in range(nt):
         # At each timestep, fft on x-z plane
-        u_hat = np.fft.fft(data[:,:,t])
+        u_hat = np.fft.fftn(data[:,:,t])
         u_hat = np.fft.fftshift(u_hat)
         eng   = np.absolute(u_hat.mean(0))**2
-        spectra[:,t] = eng
+        spectra[:,t] = eng /(nu * u_tau)
+        # spectra[:,t] = eng 
 
     # spectra = spectra/spectra.max()
     spectra = np.mean(spectra,-1)
     # spectra = spectra[:,0]
+    # Lambda_x = np.fft.fftshift(Lambda_x)
 
     return spectra, Lambda_x
 
@@ -72,12 +78,12 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz, ):
 
 plt.rc('text', usetex = True)
 plt.rc('font', family = 'serif')
-plt.rc('axes', labelsize = 16, linewidth = 1)
+plt.rc('axes', labelsize = 16, linewidth = 1.5)
 plt.rc('font', size = 16)
-plt.rc('legend', fontsize = 16)              
-plt.rc('xtick', labelsize = 16)             
-plt.rc('ytick', labelsize = 16)
-font_dict = {"fontsize":20,'weight':'bold'}
+plt.rc('legend', fontsize = 14)              
+plt.rc('xtick', labelsize = 18)             
+plt.rc('ytick', labelsize = 18)
+font_dict = {"fontsize":22,'weight':'bold'}
 
 
 ref = np.load('../data/min_channel_sr.npz')
@@ -91,9 +97,13 @@ w = ref['w']
 t = ref['t']
 
 
-Lx     =   np.abs(x.max()- x.min())
-Ly     =   np.abs(y.max()- y.min())
-Lz     =   np.abs(z.max()- z.min())
+# Lx     =   np.abs(x.max()- x.min())
+# Ly     =   np.abs(y.max()- y.min())
+# Lz     =   np.abs(z.max()- z.min())
+
+Lx     =  0.6 * np.pi 
+Ly     =  1 
+Lz     =  0.01125*np.pi
 
 
 u = np.stack([u, v, w])
@@ -112,76 +122,92 @@ t      = 5
 yp     = 0
 utype  = 2
 
-direction = 0
 
+Ylabels = [  
+            r"$E_{u}/(\nu \cdot u_{\tau})$",
+            r"$E_{v}/(\nu \cdot u_{\tau})$",
+            r"$E_{w}/(\nu \cdot u_{\tau})$",
+            ]
 
-sp_u, wvnumber = PSD_1D(u,
-                Nx = nx,
-                Ny = ny,
-                Nz = nz,
-                nt = nt,
-                Lx = Lx,
-                Ly = Ly,
-                Lz = Lz,
-                )
+Fname  =  ["u","v",'w']
 
-sp_t3s8, wvnumber = PSD_1D(u_pred2,
-                Nx = nx,
-                Ny = ny,
-                Nz = nz,
-                nt = nt,
-                Lx = Lx,
-                Ly = Ly,
-                Lz = Lz,
-                )
+for utype in range(3):
 
+    sp_u, wvnumber = PSD_1D(u,
+                    Nx = nx,
+                    Ny = ny,
+                    Nz = nz,
+                    nt = nt,
+                    Lx = Lx,
+                    Ly = Ly,
+                    Lz = Lz,
+                    utype= utype,
+                    )
 
-
-sp_t3s16, wvnumber = PSD_1D(u_pred1,
-                Nx = nx,
-                Ny = ny,
-                Nz = nz,
-                nt = nt,
-                Lx = Lx,
-                Ly = Ly,
-                Lz = Lz,
-                )
+    sp_t3s8, wvnumber = PSD_1D(u_pred2,
+                    Nx = nx,
+                    Ny = ny,
+                    Nz = nz,
+                    nt = nt,
+                    Lx = Lx,
+                    Ly = Ly,
+                    Lz = Lz,
+                    utype= utype,
+                    )
 
 
 
-fig, axs = plt.subplots(1,1,sharex=True, sharey=True, figsize=(6,4))
-
-axs.loglog( 
-            wvnumber,
-            sp_u,
-            '-.',
-            c= cc.black,
-            lw = 2.5,
-            label = 'Reference'
-        )
-
-axs.loglog( 
-            wvnumber,
-            sp_t3s8,
-            c = cc.blue,
-            lw = 2,
-            label = r'PINN--t3--s8'
-        )
+    sp_t3s16, wvnumber = PSD_1D(u_pred1,
+                    Nx = nx,
+                    Ny = ny,
+                    Nz = nz,
+                    nt = nt,
+                    Lx = Lx,
+                    Ly = Ly,
+                    Lz = Lz,
+                    utype= utype,
+                    )
 
 
-axs.loglog( 
-            wvnumber,
-            sp_t3s16,
-            c = cc.red,
-            lw = 2,
-            label = r'PINN--t3--s16'
-        )
 
-axs.set_ylabel(r"$E_{u}(k)$",font_dict )
-axs.set_xlabel(r"$k\eta$", font_dict)   
-axs.set_ylim(5 * 10e-7, 10e0)
-axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
+    fig, axs = plt.subplots(1,1,sharex=True, sharey=True, figsize=(6,4))
 
-# axs.set_xticks([wvnumber.min(), 0.5 * wvnumber.max(), wvnumber.max()])
+    axs.loglog( 
+                wvnumber,
+                sp_u,
+                '-.',
+                c= cc.black,
+                lw = 3,
+                label = 'Reference'
+            )
 
-fig.savefig(f"PSD1d.jpg",bbox_inches='tight',dpi=300)
+    axs.loglog( 
+                wvnumber,
+                sp_t3s8,
+                "-o",
+                c = cc.blue,
+                lw = 2,
+                markersize = 7.5,
+                label = r'PINN--t3--s8'
+            )
+
+
+    axs.loglog( 
+                wvnumber,
+                sp_t3s16,
+                "-^",
+                c = cc.red,
+                lw = 2,
+                markersize = 7.5,
+                label = r'PINN--t3--s16'
+            )
+
+    axs.set_ylabel(Ylabels[utype],font_dict )
+    axs.set_xlabel(r"$k_x \eta$", font_dict)   
+    # axs.set_ylim(5 * 10e-7, 10e0)
+    axs.set_ylim(10e-2, 10e5)
+    axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
+
+    # axs.set_xticks([wvnumber.min(), 0.5 * wvnumber.max(), wvnumber.max()])
+
+    fig.savefig( f"Figs/PSD1d_{Fname[utype]}.pdf",bbox_inches='tight',dpi=1000)
