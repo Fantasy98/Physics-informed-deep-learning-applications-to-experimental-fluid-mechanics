@@ -19,9 +19,11 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     Re_Tau = 202 #Direct from simulation
     Re = 5000 #Direct from simulation
     nu = 1/Re #Kinematic viscosity
-    u_tau = Re_Tau*nu
-    eta = 1/Re**-0.75
-
+    # u_tau = Re_Tau*nu
+    # eta = 1/Re**-0.75
+    eta = 1
+    nu =1
+    u_tau =1 
     yp =  30
     y_loc = Ly * (yp/Ny)
     print(f"At y = {y_loc}")
@@ -129,6 +131,12 @@ Ylabels = [
             r"$E_{w}/(\nu \cdot u_{\tau})$",
             ]
 
+Ylabels = [  
+            r"$E_{u}$",
+            r"$E_{v}$",
+            r"$E_{w}$",
+            ]
+
 Fname  =  ["u","v",'w']
 
 for utype in range(3):
@@ -203,9 +211,10 @@ for utype in range(3):
             )
 
     axs.set_ylabel(Ylabels[utype],font_dict )
-    axs.set_xlabel(r"$k_x \eta$", font_dict)   
-    # axs.set_ylim(5 * 10e-7, 10e0)
-    axs.set_ylim(10e-2, 10e5)
+    # axs.set_xlabel(r"$k_x \eta$", font_dict)   
+    axs.set_xlabel(r"$k_x$", font_dict)   
+    axs.set_ylim(5 * 10e-7, 10e0)
+    # axs.set_ylim(10e-2, 10e5)
     axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
 
     # axs.set_xticks([wvnumber.min(), 0.5 * wvnumber.max(), wvnumber.max()])
