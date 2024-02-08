@@ -1,0 +1,67 @@
+(13, 6)
+The momentum thickness 0.035990043906025664
+The Re_theta is 20696.77455456934
+The wall shear stress 0.03153113715705955
+The Re_tau is 1047.398686488441
+(13, 6)
+Computation time is 10.30007290840149
+The index will be [ 0  3  6  9 12]
+The exclude index will be [False  True  True False  True  True False  True  True False  True  True
+ False]
+(13, 4)
+Computation time is 1.4040255546569824
+The index will be [ 0  3  6  9 12]
+The exclude index will be [False  True  True False  True  True False  True  True False  True  True
+ False]
+
+Evaluating results from:NN
+Plotting $U$ [m/s]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =0.5421%
+ ${\epsilon}_{new}$ =6.5626%
+ ${\epsilon}_{spine}$ =4.4043% 
+ ${\epsilon}_{all}$ =5.2647%
+Plotting $\overline{u^2}$ [m$^2$/s$^2$]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =2.0009%
+ ${\epsilon}_{new}$ =5.4058%
+ ${\epsilon}_{spine}$ =2.7204% 
+ ${\epsilon}_{all}$ =4.3785%
+Plotting $\overline{v^2}$ [m$^2$/s$^2$]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =1.4379%
+ ${\epsilon}_{new}$ =3.0321%
+ ${\epsilon}_{spine}$ =1.305% 
+ ${\epsilon}_{all}$ =2.5898%
+Plotting $\overline{uv}$ [m$^2$/s$^2$]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =5.7302%
+ ${\epsilon}_{new}$ =8.5555%
+ ${\epsilon}_{spine}$ =8.657% 
+ ${\epsilon}_{all}$ =7.6542%
+
+Evaluating results from:PINN
+Plotting $U$ [m/s]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =0.002%
+ ${\epsilon}_{new}$ =4.6638%
+ ${\epsilon}_{spine}$ =4.4043% 
+ ${\epsilon}_{all}$ =3.7343%
+Plotting $\overline{u^2}$ [m$^2$/s$^2$]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =0.0212%
+ ${\epsilon}_{new}$ =1.9914%
+ ${\epsilon}_{spine}$ =2.7204% 
+ ${\epsilon}_{all}$ =1.5444%
+Plotting $\overline{v^2}$ [m$^2$/s$^2$]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =0.0102%
+ ${\epsilon}_{new}$ =3.2849%
+ ${\epsilon}_{spine}$ =1.305% 
+ ${\epsilon}_{all}$ =2.6506%
+Plotting $\overline{uv}$ [m$^2$/s$^2$]
+yd0=(5,), g_ref = (5,)
+ ${\epsilon}_{ref}$ =0.0659%
+ ${\epsilon}_{new}$ =5.0861%
+ ${\epsilon}_{spine}$ =8.657% 
+ ${\epsilon}_{all}$ =4.0629%

@@ -1,0 +1,67 @@
+(13, 6)
+The momentum thickness 0.035990043906025664
+The Re_theta is 20696.77455456934
+The wall shear stress 0.03153113715705955
+The Re_tau is 1047.398686488441
+(13, 6)
+Computation time is 7.41147780418396
+The index will be [ 0  2  4  6  8 10 12]
+The exclude index will be [False  True False  True False  True False  True False  True False  True
+ False]
+(13, 4)
+Computation time is 1.1728758811950684
+The index will be [ 0  2  4  6  8 10 12]
+The exclude index will be [False  True False  True False  True False  True False  True False  True
+ False]
+
+Evaluating results from:NN
+Plotting $U$ [m/s]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =0.9844%
+ ${\epsilon}_{new}$ =4.3154%
+ ${\epsilon}_{spine}$ =2.3825% 
+ ${\epsilon}_{all}$ =3.0723%
+Plotting $\overline{u^2}$ [m$^2$/s$^2$]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =2.743%
+ ${\epsilon}_{new}$ =2.7009%
+ ${\epsilon}_{spine}$ =0.9945% 
+ ${\epsilon}_{all}$ =2.7241%
+Plotting $\overline{v^2}$ [m$^2$/s$^2$]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =0.8963%
+ ${\epsilon}_{new}$ =1.4368%
+ ${\epsilon}_{spine}$ =0.7399% 
+ ${\epsilon}_{all}$ =1.1899%
+Plotting $\overline{uv}$ [m$^2$/s$^2$]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =9.1834%
+ ${\epsilon}_{new}$ =15.0989%
+ ${\epsilon}_{spine}$ =3.8976% 
+ ${\epsilon}_{all}$ =12.4638%
+
+Evaluating results from:PINN
+Plotting $U$ [m/s]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =0.076%
+ ${\epsilon}_{new}$ =2.113%
+ ${\epsilon}_{spine}$ =2.3825% 
+ ${\epsilon}_{all}$ =1.4646%
+Plotting $\overline{u^2}$ [m$^2$/s$^2$]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =0.4702%
+ ${\epsilon}_{new}$ =1.1387%
+ ${\epsilon}_{spine}$ =0.9945% 
+ ${\epsilon}_{all}$ =0.8408%
+Plotting $\overline{v^2}$ [m$^2$/s$^2$]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =0.2961%
+ ${\epsilon}_{new}$ =1.639%
+ ${\epsilon}_{spine}$ =0.7399% 
+ ${\epsilon}_{all}$ =1.1619%
+Plotting $\overline{uv}$ [m$^2$/s$^2$]
+yd0=(7,), g_ref = (7,)
+ ${\epsilon}_{ref}$ =1.948%
+ ${\epsilon}_{new}$ =3.7468%
+ ${\epsilon}_{spine}$ =3.8976% 
+ ${\epsilon}_{all}$ =2.9764%

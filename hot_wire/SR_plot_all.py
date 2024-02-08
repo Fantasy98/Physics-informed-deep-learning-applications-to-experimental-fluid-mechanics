@@ -63,7 +63,7 @@ epoch   = 1000
 ind     = 0
 s_w     = 10 
 u_w     = 1
-SampleFreq =6
+SampleFreq =3
 casename_pinn = f"SR_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 casename_mlp  = f"SR_NoPI_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 ud = np.load(fdir+casename_pinn+'.npz')
@@ -157,6 +157,7 @@ error_dict = {}
 for name in names[0]:
         error_dict[name]=np.empty(shape=(len(dp1List)+1,))
 
+modelname = ['NN',"PINN"]
 plt.subplots_adjust(wspace=0.15)
 for i in range(len(dp1List)):
         dp0     = dp0List[i]
@@ -164,6 +165,7 @@ for i in range(len(dp1List)):
         upp     = uppList[i]
         marker  = markers[i]
         color   = colors[i]
+        print(f"\nEvaluating results from:{modelname[i]}")
         for j in range(4):
                 print(f"Plotting {names[0][j]}")
                 g_ref = dp[j][masks_ref]
