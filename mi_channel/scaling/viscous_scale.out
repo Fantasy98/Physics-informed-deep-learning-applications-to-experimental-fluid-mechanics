@@ -1,0 +1,40 @@
+
+##############################
+The actual case in hand:
+
+Summary of data:
+Data loaded, Nz = 2
+Ny = 64
+Nx = 32
+Nt = 21
+
+Time duration: t = 0.00 to 4.00, nt = 21
+
+Domain size	X = -0.3pi to 0.3pi
+Domain size	Y = 0.0 to 1.0
+Domain size	Z = -0.01125pi to 0.0000pi
+
+Characteristic values from reference:
+Half height of channel h:	1
+Central line Reynolds number Re_cl:	5000
+Friction Reynolds number Re_tau:	202
+
+Viscous length scale approximation: 0.005 
+
+Viscous time scale approximation: 0.123 
+
+Examine the resolution by scale:
+dx = 0.05890486218750002, dymin = -0.024526445804505862, dymax = -0.00030118130379575003, dz = 0.035342916875, dt = 0.2
+Scaled:
+dx_s = 11.90eta
+dy_s_min = 0.06eta dy_s_max = 4.95eta
+dz_s = 7.14eta
+dt_s = 1.63teta
+
+As case of s = 16, t = 5
+
+Scaled:
+dx_s = 23.80eta
+dy_s_min = 0.97eta dy_s_max = 19.61eta
+dz_s = 7.14eta
+dt_s = 8.16teta

@@ -45,107 +45,25 @@ class mini_channel:
     mu      = 1/Recl # Viscousity 
     utau    = Retau/Recl
 
-def kolmogorov_scale( mu, dissip):
+def compute_scale(mu, utau):
     """
-    Compute the Kolmogorov scale by dissipation term
+    Compute the Kolmogorov scale by viscousity and friction velocity 
     
-    We follow the equation eta = (mu**3/epsilon)**(1/3)
+    We follow the equation for viscous time:  
+            
+            teta = mu/utau**2 
+
+            eta = teta * utau = mu/utau
     """
-    eta= ( mu**3. / dissip )
-    eta= eta ** (0.25)
-    return eta
+
+    teta = mu / utau**2
+    eta  = teta * utau # Length scale
+
+    return eta, teta
 
 
-def ref_scale(Re_tau):
-    """
-    Load the data of Re_tau from the DNS channel case 
-    and scaled back to our case by u_tau
 
-    We follow the equation eta = (mu**3/epsilon)**(1/3)
-    """
-    print("#"*30)
-    print(f"Reference scale from public DNS Dataset")
-    # File which stores the sum of dissapsion 
-    file_path = f"data/Re{Re_tau}/balances/Re{Re_tau}.bal.kbal"
-    print(f"Loading the file from:\n{file_path}")
-
-
-# Initialise the diction for data
-#--------------------
-    key_list = ["y/h",
-                "y+",
-                "dissip",
-                "produc",
-                "p-strain",
-                "p-diff",
-                "t-diff",
-                "v-diff",
-                "bal",
-                "tp-kbal"]
-    
-    data_dict = {}
-    for k in key_list:
-        data_dict[k] = []
-
-# Load the file 
-#--------------------
-
-    with open(file_path,'r') as f:
-        
-        i = 0 
-        head = f.readline().split()
-        header = head[0]
-        header_next= header
-        
-        while( (header_next[0] == header)):
-            line_next = f.readline().split()
-            header_next = line_next[0]
-            i+=1
-        print(f"At {i} We stop the header of the data!")
-        
-        for i, val in enumerate(line_next):
-            data_dict[key_list[i]].append(float(val))
-
-        if_load = True
-        while if_load:
-            line_next = f.readline().split()
-            if len(line_next) != 0:
-                for i, val in enumerate(line_next):
-                    data_dict[key_list[i]].append(float(val))
-                if_load = True
-            else:
-                if_load = False
-    f.close()
-    print(f"DATA LOADING FINISH:")
-
-# Acuqire data 
-#--------------------
-    dissip = np.array(data_dict['dissip'])
-    yh     = np.array(data_dict['y/h'])
-    print(f"Dissipation Term Loaded: There are {len(dissip)} elements along the wall")
-
-# Compute Kolmogorov Scale as a function of wall
-#--------------------
-    ## Basic info for our 
-    # Rescale it 
-    dissip *= mini_channel.utau**4
-    dissip /= (mini_channel.mu)
-
-
-    eta = kolmogorov_scale( mu      =   mini_channel.mu, 
-                            dissip  =   np.abs(dissip))
-    
-    print(f"Komlgorov Scaled computed, max: {eta.max():.3f}, min: {eta.min():.3f}")
-    fig,axs = plt.subplots(1,1,figsize=(5,5))
-    axs.plot(eta,yh,'-o',c=cc.black,lw=2.5)
-    axs.set_xlabel(r'$\eta$',font_dict)
-    axs.set_ylabel(r'$y/h$',font_dict)
-    axs.set_title(r"$Re_{\tau}$" + f" = {mini_channel.Retau}")
-    fig.savefig("Figs/kolmogorov_normal.pdf",bbox_inches='tight',dpi=500)
-    
-    return
-
-def actual_scale(args):
+def viscous_scale(args):
     """
     Function for showcasting the current scale
 
@@ -182,9 +100,9 @@ def actual_scale(args):
 
     #-----------------------------------
     # Some given information in the reference 
-    Recl    = 5000 
-    Retau   = 202 
-    h       = 1  # Non-dimensional half-height of channel 
+    Recl    = mini_channel.Recl
+    Retau   = mini_channel.Retau
+    h       = mini_channel.h  # Non-dimensional half-height of channel 
 
     print(f"\nCharacteristic values from reference:")
     print(f"Half height of channel h:\t{h}")
@@ -194,18 +112,30 @@ def actual_scale(args):
     #------------------------------------
     # Kolmogorov Length scale estimation 
     # L/eta  = Re^{3/4}
-    eta  = h /  Recl**(3/4)
-    print(f"\nKolmgorov length scale approximation: {eta:.3f} ")
-
+    eta,teta  = compute_scale(mu=mini_channel.mu,utau=mini_channel.utau)
+    print(f"\nViscous length scale approximation: {eta:.3f} ")
     #------------------------------------
     # Kolmogorov Time scale estimation 
-    # tL/teta  = Re^{1/2}
-    teta  =  1 /  Recl**(1/2)
-    print(f"\nKolmgorov time scale approximation: {teta:.3f} ")
+    print(f"\nViscous time scale approximation: {teta:.3f} ")
+
+
+    # We deomstrate the scaled wall-normal positions
+
+    y_scale = y/eta
+    fig,axs = plt.subplots(1,1,figsize=(5,5))
+    axs.plot(y_scale,y,'-o',c=cc.black,lw=2.5)
+    axs.set_xlabel(r'$\frac{y u_\tau }{\mu}$',font_dict)
+    axs.set_ylabel(r'$y/h$',font_dict)
+    axs.set_title(r"$t_{\rm visc }$" + f" = {teta:.3e}\n"+\
+                r"$l_{\rm visc}$" + f"= {eta:.3e}"  )
+    fig.savefig("Figs/visous_normal.pdf",bbox_inches='tight',dpi=500)
+    
+
+
+
 
     #------------------------------------
     #Estimate the spatial and temporal interval via Kolmogorov length and time scale 
-
     sx = 1
     sy = 1
     sz = 1
@@ -252,8 +182,5 @@ def actual_scale(args):
 
 if __name__ == '__main__':
     
-    Re_tau = 180
-    
-    ref_scale(Re_tau)
 
-    actual_scale(args)
+    viscous_scale(args)
