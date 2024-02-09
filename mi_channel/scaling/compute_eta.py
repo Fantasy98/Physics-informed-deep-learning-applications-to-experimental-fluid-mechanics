@@ -35,7 +35,7 @@ plt.rc('legend', fontsize = 16)
 plt.rc('xtick', labelsize = 16)             
 plt.rc('ytick', labelsize = 16)
 
-
+font_dict = {'size':25,"weight":'bold'}
 
 
 class mini_channel:
@@ -133,8 +133,8 @@ def ref_scale(Re_tau):
     print(f"Komlgorov Scaled computed, max: {eta.max():.3f}, min: {eta.min():.3f}")
     fig,axs = plt.subplots(1,1,figsize=(5,5))
     axs.plot(eta,yh,'-o',c=cc.black,lw=2.5)
-    axs.set_xlabel(r'$\eta$')
-    axs.set_ylabel(r'$y/h$')
+    axs.set_xlabel(r'$\eta$',font_dict)
+    axs.set_ylabel(r'$y/h$',font_dict)
     axs.set_title(r"$Re_{\tau}$" + f" = {mini_channel.Retau}")
     fig.savefig("Figs/kolmogorov_normal.pdf",bbox_inches='tight',dpi=500)
     
