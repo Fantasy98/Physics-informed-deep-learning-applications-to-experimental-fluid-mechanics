@@ -40,7 +40,7 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     # for t in range(nt):
     #     data[:,:,:,t] = data[:,:,:,t] - data.mean(-1)
 
-    data    = data[:,yp,:,:]
+    # data    = data[:,yp,:,:]
     data    = data[:,:,xp,:]
     # Fluctuation
     # Wavenumber spacing
@@ -64,8 +64,8 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     Lambda_x = kx 
     Lambda_y = ky 
     Lambda_z = kz 
-    spectra = np.empty(shape=(Nx,nt))
-    # spectra = np.empty(shape=(Ny,nt))
+    # spectra = np.empty(shape=(Nx,nt))
+    spectra = np.empty(shape=(Ny,nt))
     for t in range(nt):
         # At each timestep, fft on x-z plane
         u_hat = np.fft.fftn(data[:,:,t])
@@ -76,8 +76,10 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
 
     # spectra = spectra/spectra.max()
     spectra = np.mean(spectra,-1)
-    wvnumber = Lambda_x * eta
-    return spectra, wvnumber
+    wvnumberx = Lambda_x * eta
+    wvnumbery = Lambda_y * eta
+    wvnumberz = Lambda_z * eta
+    return spectra, wvnumbery
 
 
 
@@ -216,11 +218,11 @@ for utype in range(3):
             )
 
     axs.set_ylabel(Ylabels[utype],font_dict )
-    axs.set_xlabel(r"$k_x l^*$", font_dict)   
-    # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
+    # axs.set_xlabel(r"$k_x l^*$", font_dict)   
+    axs.set_xlabel(r"$k_{y^+}$", font_dict)   
     # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
     
-    axs.set_ylim(5 * 10e-7, 10e0)
+    # axs.set_ylim(5 * 10e-7, 10e0)
     
     axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
 
