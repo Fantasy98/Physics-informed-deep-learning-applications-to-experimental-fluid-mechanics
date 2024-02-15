@@ -37,8 +37,11 @@ U_e   = 8.38
 rho = 1.225 #kg/m^3
 nu = mu /rho
 u_tau  = 0.48 # Given in the papaer 
-d99 = np.trapz((1 - U/U_e),y)
+d99 = np.trapz(rho*(1 - U/U_e),y)
 print(f"BL Thickness is = {d99}")
+d99 = y[np.where(U<U.max()*0.99)[0]][-1]
+print(f"BL Thickness is = {d99}")
+
 
 ds = d
 y = ds[0:,0]
@@ -57,7 +60,7 @@ s_w     = 10
 u_w     = 1
 
 
-varNames    = ["U","uu","vv",'uv']
+varNames    = ["U","uu","vv",'uv','avg']
 error_dict  = {}
 for n in varNames:
     error_dict[n] = []
@@ -67,7 +70,9 @@ error_mat = []
 names       =  [r"$\varepsilon_{U}$" + " (%) ",
         r"$\varepsilon_{\overline{u^2}}$" + " (%) ",
         r"$\varepsilon_{\overline{v^2}}$" + " (%) ",
-        r"$\varepsilon_{\overline{uv}}$" + " (%) "  ]
+        r"$\varepsilon_{\overline{uv}}$" + " (%) ",
+        r"$\overline{\varepsilon}$" + " [%] " 
+        ]
 ydiff       = []
 
 for SampleFreq in SampleFreqs:
@@ -75,17 +80,23 @@ for SampleFreq in SampleFreqs:
     
     # Retained sample
     y_sample = y[::SampleFreq]
-    diff_y_sample = np.mean(np.diff(y_sample)/d99)
+    diff_y_sample = np.mean(np.diff(y_sample))/d99
     
     print(f"The difference between retained y sample: {diff_y_sample}")
     ydiff.append(diff_y_sample)
 
     df = pd.read_csv(f"sr_error_compare_{SampleFreq}.csv")
     error_val = df.to_numpy()
+    error_val = error_val[:,1:]
+    error_val = np.concatenate([error_val,error_val.mean(-1).reshape(3,1)],axis=-1)
     error_mat.append(error_val)
 
-error_mat = np.stack(error_mat)
 
+error_mat = np.stack(error_mat)
+# print(error_mat.shape)
+# error_mat = np.concatenate([error_mat, 
+                        # error_mat.mean(-1).reshape(3,3,1) ],axis=-1)
+print(error_mat.shape)
 print(error_mat[0,1,:])
 
 
@@ -94,16 +105,17 @@ colors      = ["g","r",'orange']
 markers     = ["s","o","^"]
 
 for jl, varname in enumerate(varNames):
-    fig, axs = plt.subplots(1,1,figsize=(6,6))
+    fig, axs = plt.subplots(1,1,figsize=(6,4))
     for il,name in enumerate(methods):
         marker = markers[il]
         color = colors[il]
         axs.plot(
                 ydiff,
-                error_mat[:,il, jl+1],
+                error_mat[:,il, jl],
                 "-"+marker,color=color, markersize=10, 
                 )
     axs.set_xlabel(r"$\overline{\Delta y}" +  " / " +  "\delta_{99}$",fontsize = 25)
+    # axs.set_xlabel(r"$\overline{\Delta y}$" +  " / " +  r"$y_{\rm max}$",fontsize = 25)
     # axs.set_ylabel(r"$\varepsilon_{\overline{uv}}$ (%)", fontsize = 25)
     axs.set_ylabel(names[jl], fontsize = 25)
     # axs.set_xticks(ydiff)``

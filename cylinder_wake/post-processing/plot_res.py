@@ -41,14 +41,16 @@ p = p[:, :, :nt]
 
 np.random.seed(24)
 c = 10.0 
-
+c = 0.0
 u_noise = u + np.random.normal(0, c, np.shape(u)) * u / 100
 v_noise = v + np.random.normal(0, c, np.shape(v)) * v / 100
 u_noise = np.stack([u_noise, v_noise])
 
-data_pinn = np.load(f'../results/res_cylinder_Gn{c}.npz')
+# data_pinn = np.load(f'../results/res_cylinder_Gn{c}.npz')
+data_pinn = np.load(f'../results/cylinder_PINN_{c}.npz')
 u_pinn = data_pinn['up']
 
+"""
 vh_pinn = np.linalg.lstsq(U @ np.diag(s), u_pinn[:2].reshape((-1, 71)), rcond=None)[0]
 #%%
 uy = np.gradient(u, y[:, 0], axis = 0, edge_order=2)
@@ -148,44 +150,68 @@ cb0 = fig.colorbar(c1, ax = ax[:, :2], format = '%.2f', location = 'left', shrin
 cb0.ax.locator_params(nbins = 6)
 
 # plt.savefig('cylinder_res_pinn.png', bbox_inches = 'tight', dpi = 300)
-
+"""
+l=12
+n=53
 #%%
 # data_pinn = np.load('../results/res_cylinder_Gn0.0.npz')
 u_pinn = data_pinn['up']
 u_pinn[2] = u_pinn[2] - u_pinn[2].mean() + p.mean()
 
-n = 18
+n = 53
 e_pinn = np.abs(u_pinn[2, :, :, n] - p[:, :, n])
 
-fig, ax = plt.subplots(1, 3, figsize=(12, 4))
+e_r_pinn = np.abs((p[:, :, n] - u_pinn[2, :, :, n])/p[:, :, n])
+
+fig, ax = plt.subplots(2, 2, figsize=(6, 4.5),sharex=True,sharey=True)
 # plt.set_cmap('cmo.tarn_r')
 cmap = 'cmo.tarn_r'
 
-c0 = ax[1].contourf(x, y, p[:, :, n],    cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
-ax[0].contourf(x, y, u_pinn[2, :, :, n], cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
-c1 = ax[2].contourf(x, y, e_pinn,        cmap = cmap, levels = l)
+c0 = ax[0,1].contourf(x, y, p[:, :, n],    cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
+ax[0,0].contourf(x, y, u_pinn[2, :, :, n], cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
+c1 = ax[1,0].contourf(x, y, e_pinn,        cmap = cmap, levels = l)
+c2 = ax[1,1].contourf(x, y, e_r_pinn,        cmap = cmap, levels = l)
 
 for axx in ax.flatten():
     axx.set_aspect('equal')
     axx.set_xticks([1, 4.5, 8])
-    
-cb0 = fig.colorbar(c0, ax = ax[:2], format = '%.2f', shrink = 0.4)
+
+cax = fig.add_axes([0.95,0.57,0.01,0.26])
+cb0 = plt.colorbar(c0,cax=cax,format = "%.2f",shrink = 0.9, pad = 0.25, aspect = 20)
 cb0.ax.locator_params(nbins = 5)
 
-cb1 = fig.colorbar(c1, ax = ax[2], format = '%.2f', shrink = 0.4, pad = 0.1)
-cb1.ax.locator_params(nbins = 5)
+cax2 = fig.add_axes([0.15,-0.02,0.3,0.01])
+cb2 = plt.colorbar(c1,cax=cax2,format = "%.2f", 
+                        orientation='horizontal',
+                        shrink = 0.9, 
+                        pad = 0.25, aspect = 20)
+cb2.set_ticks([0.2*e_pinn.max(), 0.5*e_pinn.max(), 0.8*e_pinn.max()])
 
-for axx in ax:
+cb2.ax.locator_params(nbins=3)
+
+
+cax3 = fig.add_axes([0.58,-0.02,0.3,0.01])
+cb3 = plt.colorbar(c2,cax=cax3,format = "%.1d", 
+                        orientation='horizontal',
+                        shrink = 0.9, 
+                        pad = 0.25, aspect = 20)
+
+cb3.set_ticks([0.2*e_r_pinn.max(), 0.5*e_r_pinn.max(), 0.8*e_r_pinn.max()])
+cb3.ax.locator_params(nbins=3)
+    
+for axx in ax[1,:].flatten():
     axx.set_xlabel('$x$')
     
-for axx in ax[1:3]:
+for axx in ax.flatten()[1:3]:
     axx.set_yticklabels([])
 
-ax[0].set_ylabel('$y$')
+ax[0,0].set_ylabel('$y$')
+ax[1,0].set_ylabel('$y$')
+ax[0,1].set_title('Reference')
+ax[0,0].set_title('PINNs')
+ax[1,0].set_title('$\\varepsilon = | p - \\tilde{p} |$', fontsize = 16)
+ax[1,1].set_title('$\\hat{\\varepsilon} = | (p - \\tilde{p})$' + "/" + "$ p |$", fontsize = 16)
 
-ax[1].set_title('Reference')
-ax[0].set_title('PINNs')
-ax[2].set_title('$\\varepsilon = | p - \\tilde{p} |$', fontsize = 16)
 
-
-# plt.savefig('cylinder_res_p.png', bbox_inches = 'tight', dpi = 300)
+plt.savefig('clean_pressure.pdf', bbox_inches = 'tight', dpi = 500)
+plt.savefig('clean_pressure.jpg', bbox_inches = 'tight', dpi = 500)
