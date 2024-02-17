@@ -151,24 +151,33 @@ cb0.ax.locator_params(nbins = 6)
 
 # plt.savefig('cylinder_res_pinn.png', bbox_inches = 'tight', dpi = 300)
 """
-l=12
-n=53
+
 #%%
-# data_pinn = np.load('../results/res_cylinder_Gn0.0.npz')
+data_pinn = np.load(f'../results/cylinder_PINN_{c}.npz')
+
 u_pinn = data_pinn['up']
 u_pinn[2] = u_pinn[2] - u_pinn[2].mean() + p.mean()
-
-n = 53
+l=10
+n=53
 e_pinn = np.abs(u_pinn[2, :, :, n] - p[:, :, n])
 
-e_r_pinn = np.abs((p[:, :, n] - u_pinn[2, :, :, n])/p[:, :, n])
+import numpy.linalg as LA
+
+# u_pinn[2,:,:,n] = 
+
+
+e_r_pinn = np.abs((p[:, :, n] - u_pinn[2, :, :, n]))/LA.norm(p[:, :, n,None],ord=1,axis=-1)
+
+
 
 fig, ax = plt.subplots(2, 2, figsize=(6, 4.5),sharex=True,sharey=True)
 # plt.set_cmap('cmo.tarn_r')
 cmap = 'cmo.tarn_r'
 
-c0 = ax[0,1].contourf(x, y, p[:, :, n],    cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
 ax[0,0].contourf(x, y, u_pinn[2, :, :, n], cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
+c0 = ax[0,1].contourf(x, y, p[:, :, n],    cmap = cmap, levels = l, vmin = -0.5, vmax = 0.05)
+
+l = 12
 c1 = ax[1,0].contourf(x, y, e_pinn,        cmap = cmap, levels = l)
 c2 = ax[1,1].contourf(x, y, e_r_pinn,        cmap = cmap, levels = l)
 
@@ -215,3 +224,5 @@ ax[1,1].set_title('$\\hat{\\varepsilon} = | (p - \\tilde{p})$' + "/" + "$ p |$",
 
 plt.savefig('clean_pressure.pdf', bbox_inches = 'tight', dpi = 500)
 plt.savefig('clean_pressure.jpg', bbox_inches = 'tight', dpi = 500)
+
+
