@@ -169,9 +169,9 @@ e_r_pinn = np.abs((p[:, :, n] - u_pinn[2, :, :, n]))/LA.norm(p[:, :, n,None],ord
 
 # e_r_pinn = np.abs((p[:, :, n] - u_pinn[2, :, :, n])/p[:, :, n])
 
-# e_r_pinn *= 100
-# loc = np.where(e_r_pinn >= 100)
-# e_r_pinn[loc] = 100
+e_r_pinn *= 100
+loc = np.where(e_r_pinn >= 100)
+e_r_pinn[loc] = 100
 
 # print(e_r_pinn)
 
@@ -226,7 +226,7 @@ ax[1,0].set_ylabel('$y$')
 ax[0,1].set_title('Reference')
 ax[0,0].set_title('PINNs')
 ax[1,0].set_title('$\\varepsilon = | p - \\tilde{p} |$', fontsize = 16)
-ax[1,1].set_title('$\\hat{\\varepsilon} = | (p - \\tilde{p})$' + "/" + "$ p |$", fontsize = 16)
+ax[1,1].set_title('$\\hat{\\varepsilon} = | (p - \\tilde{p})$' + "/" + "$ p |$" + " %", fontsize = 16)
 
 
 plt.savefig('clean_pressure.pdf', bbox_inches = 'tight', dpi = 500)
