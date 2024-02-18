@@ -27,7 +27,7 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     # eta = 1
     # nu =1
     # u_tau =1 
-    yp =  30
+    yp = 5
     y_loc = Ly * (yp/Ny) /eta
 
     print(f"At y+ = {y_loc}")
@@ -74,20 +74,17 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
         # At each timestep, fft on x-z plane
         u_hat = np.fft.fftn(data[:,:,t])
         u_hat = np.fft.fftshift(u_hat)
+        # eng   = np.absolute(u_hat.mean(0))
         eng   = np.absolute(u_hat.mean(0))**2
         spectra[:,t] = eng
         # spectra[:,t] = eng 
 
     # spectra = spectra/spectra.max()
     spectra = np.mean(spectra,-1)
-    wvnumberx = Lambda_x * eta
+    wvnumberx = Lambda_x 
     wvnumbery = Lambda_y * eta
     wvnumberz = Lambda_z * eta
     return spectra, wvnumberx
-
-
-
-    
 
 plt.rc('text', usetex = True)
 plt.rc('font', family = 'serif')
@@ -222,11 +219,12 @@ for utype in range(3):
             )
 
     axs.set_ylabel(Ylabels[utype],font_dict )
-    axs.set_xlabel(r"$k_x$"+r"$l^*$", font_dict)   
+    # axs.set_xlabel(r"$k_x$"+r"$l^*$", font_dict)   
+    axs.set_xlabel(r"$k_{x^+}$", font_dict)   
     # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
     # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
     
-    axs.set_ylim(5 * 10e-7, 10e0)
+    # axs.set_ylim(5 * 10e-7, 10e0)
     
     axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
 
