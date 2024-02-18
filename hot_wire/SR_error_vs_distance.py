@@ -8,6 +8,7 @@ from pyDOE import lhs
 from scipy.interpolate import interp1d
 import pandas as pd 
 plt.rc("font",family = "serif")
+plt.rc('text',usetex=True)
 plt.rc("font",size = 20)
 plt.rc("axes",labelsize = 16, linewidth = 2)
 plt.rc("legend",fontsize= 12, handletextpad = 0.3)
@@ -71,7 +72,7 @@ names       =  [r"$\varepsilon_{U}$" + " (%) ",
         r"$\varepsilon_{\overline{u^2}}$" + " (%) ",
         r"$\varepsilon_{\overline{v^2}}$" + " (%) ",
         r"$\varepsilon_{\overline{uv}}$" + " (%) ",
-        r"$\overline{\varepsilon}$" + " [%] " 
+        r"$\overline{\varepsilon}$" + r" [\%] " 
         ]
 ydiff       = []
 
@@ -114,10 +115,10 @@ for jl, varname in enumerate(varNames):
                 error_mat[:,il, jl],
                 "-"+marker,color=color, markersize=10, 
                 )
-    axs.set_xlabel(r"$\overline{\Delta y}" +  " / " +  "\delta_{99}$",fontsize = 25)
+    axs.set_xlabel(r"$\overline{\Delta y}" +  " / " +  "\delta_{99}$",fontsize = 20)
     # axs.set_xlabel(r"$\overline{\Delta y}$" +  " / " +  r"$y_{\rm max}$",fontsize = 25)
     # axs.set_ylabel(r"$\varepsilon_{\overline{uv}}$ (%)", fontsize = 25)
-    axs.set_ylabel(names[jl], fontsize = 25)
+    axs.set_ylabel(names[jl], fontsize = 20)
     # axs.set_xticks(ydiff)``
-    plt.legend(methods)
+    plt.legend(methods,fontsize = 16)
     plt.savefig('04_fig/' + f'error_Vs_distance_{varname}.pdf',dpi=300,bbox_inches='tight')

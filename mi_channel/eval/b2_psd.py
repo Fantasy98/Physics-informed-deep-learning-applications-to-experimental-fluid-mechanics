@@ -74,13 +74,15 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
         # At each timestep, fft on x-z plane
         u_hat = np.fft.fftn(data[:,:,t])
         u_hat = np.fft.fftshift(u_hat)
+        # eng   = np.absolute(u_hat.sum(0))**2
+        
         # eng   = np.absolute(u_hat.mean(0))
-        eng   = np.absolute(u_hat.mean(0))**2
+        eng   = np.absolute(u_hat.sum(0))**2
         spectra[:,t] = eng
         # spectra[:,t] = eng 
 
     # spectra = spectra/spectra.max()
-    spectra = np.mean(spectra,-1)
+    spectra = np.sum(spectra,-1)
     wvnumberx = Lambda_x 
     wvnumbery = Lambda_y * eta
     wvnumberz = Lambda_z * eta

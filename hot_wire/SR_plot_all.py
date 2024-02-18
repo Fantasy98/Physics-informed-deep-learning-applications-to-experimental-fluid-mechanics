@@ -9,6 +9,7 @@ from matplotlib import pyplot as plt
 from pyDOE import lhs
 from scipy.interpolate import interp1d
 plt.rc("font",family = "serif")
+plt.rc('text',usetex=True)
 plt.rc("font",size = 20)
 plt.rc("axes",labelsize = 16, linewidth = 2)
 plt.rc("legend",fontsize= 12, handletextpad = 0.3)
@@ -63,7 +64,7 @@ epoch   = 1000
 ind     = 0
 s_w     = 10 
 u_w     = 1
-SampleFreq =3
+SampleFreq =6
 casename_pinn = f"SR_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 casename_mlp  = f"SR_NoPI_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 ud = np.load(fdir+casename_pinn+'.npz')

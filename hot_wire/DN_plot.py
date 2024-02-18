@@ -7,6 +7,7 @@ import argparse
 from time import time
 
 plt.rc("font",family = "serif")
+plt.rc('text',usetex=True)
 plt.rc("font",size = 22)
 plt.rc("axes",labelsize = 16, linewidth = 2)
 plt.rc("legend",fontsize= 12, handletextpad = 0.3)
