@@ -24,11 +24,14 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     eta = nu / u_tau
 
     print(f"Lambdax+ = { 0.6 * np.pi/eta}")
-    yp = 5
+    yp = int(Ny/1.3)
+    yp = 23
     y_loc = Ly * (yp/Ny) /eta
     print(f"At y+ = {y_loc}")
+    
     y_loc = Ly * (yp/Ny)
-    # print(f"At y = {y_loc}")
+
+    print(f"At y = {y_loc}")
     xp = int(Nx/2)
     
     
@@ -60,7 +63,7 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     
     spectra = np.empty(shape=(Nx,nt))
     for t in range(nt):
-        u_hat = np.fft.fftn(data[:,:,t])
+        u_hat = np.fft.fftn(data[:,:,t]**2)
         
         u_hat = np.fft.fftshift(u_hat)
 
