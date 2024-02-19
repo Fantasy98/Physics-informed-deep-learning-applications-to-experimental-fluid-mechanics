@@ -15,6 +15,8 @@ plt.rc("axes",labelsize = 16, linewidth = 2)
 plt.rc("legend",fontsize= 12, handletextpad = 0.3)
 plt.rc("xtick",labelsize = 16)
 plt.rc("ytick",labelsize = 16)
+font_dict = {"fontsize":25,'weight':'bold'}
+
 # %%
 
 def l2_error(p,g):
@@ -64,7 +66,7 @@ epoch   = 1000
 ind     = 0
 s_w     = 10 
 u_w     = 1
-SampleFreq =6
+SampleFreq =2
 casename_pinn = f"SR_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 casename_mlp  = f"SR_NoPI_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 ud = np.load(fdir+casename_pinn+'.npz')
@@ -197,8 +199,8 @@ for i in range(len(dp1List)):
                         r" ${\epsilon}_{new}$ ="+ f"{e_new}%\n"+\
                         r" ${\epsilon}_{spine}$ ="+ f"{e_spine}% \n"+\
                         r" ${\epsilon}_{all}$ ="+ f"{e_all}%")
-                axs[j].set_xlabel(names[0][j],fontsize=22)
-axs[0].set_ylabel("y [m]",fontsize=22)
+                axs[j].set_xlabel(names[0][j],font_dict)
+axs[0].set_ylabel("y [m]",font_dict)
 plt.savefig("04_fig/"+f"SR_All_compare_{SampleFreq}"+".pdf",dpi=1000,bbox_inches="tight")
 plt.savefig("04_fig/"+f"SR_All_compare_{SampleFreq}"+".jpg",dpi=1000,bbox_inches="tight")
 

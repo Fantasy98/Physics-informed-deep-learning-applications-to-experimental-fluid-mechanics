@@ -13,6 +13,8 @@ plt.rc("axes",labelsize = 16, linewidth = 2)
 plt.rc("legend",fontsize= 12, handletextpad = 0.3)
 plt.rc("xtick",labelsize = 16)
 plt.rc("ytick",labelsize = 16)
+font_dict = {"fontsize":25,'weight':'bold'}
+
 # plt.rc("xlabel",labelsize = 16)
 # plt.rc("ylabel",labelsize = 16)\
 parser = argparse.ArgumentParser(description='PINN training')
@@ -155,10 +157,10 @@ for j in range(4):
         axs[j].plot(upp[:,j],y,"-or",lw = 2)
         axs[j].plot(l2_dn[:,j],y,"^-b",lw = 2)
         
-        axs[j].set_xlabel(names[0][j],fontsize=22)
+        axs[j].set_xlabel(names[0][j],fontdict=font_dict)
 
 # [ax.set_ylabel(r"$y (m)$") for ax in axs]
-axs[0].set_ylabel(r"$y$"+" [m]",fontsize=22)
+axs[0].set_ylabel(r"$y$"+" [m]",fontdict=font_dict)
 plt.savefig(f"04_fig/"+f"DN_Noise_{args.noise}"+".pdf",dpi=1000,bbox_inches="tight")
 plt.savefig(f"04_fig/"+f"DN_Noise_{args.noise}"+".jpg",dpi=1000,bbox_inches="tight")
 # %%

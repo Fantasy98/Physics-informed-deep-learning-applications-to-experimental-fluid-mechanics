@@ -22,62 +22,57 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     u_tau = Re_Tau*nu
     
     eta = nu / u_tau
-    
-    # eta = 1/Re**-0.75
-    # eta = 1
-    # nu =1
-    # u_tau =1 
-    yp = 30
+    yp = 10
     y_loc = Ly * (yp/Ny) /eta
     print(f"At y+ = {y_loc}")
     y_loc = Ly * (yp/Ny)
     print(f"At y = {y_loc}")
     xp = int(Nx/2)
+    
+    
     # utype = 2
     # Streamwise velocity at wall
-    data = data[utype] 
-    # for t in range(nt):
-        # data[:,:,:,t] = data[:,:,:,t] - data.mean(-1)
-
-    data    = data[:,yp,:,:] / u_tau
-    # data    = data[:,:,xp,:]
-    # Fluctuation
-    # Wavenumber spacing
+    data_ = data[utype] 
+    data  = data - np.mean(data,-1,keepdims=True)
+    
+    Yplus = np.linspace(0,Ly,Ny)/eta
+    
+    Spectra = np.empty(shape=(Nx,Ny))
+    
+    data    = data_[:,yp,:,:]
     dkx = 2*np.pi/(Lx) 
     dky = 2*np.pi/(Ly)
     dkz = 2*np.pi/(Lz)
 
     # Wave number 
-    x_range =  dkx *  np.linspace(-Nx/2 , Nx/2 -1, Nx)
-    y_range =  dky *  np.linspace(-Ny/2 , Ny/2 -1, Ny)
-    z_range =  dkz *  np.linspace(-Nz/2 , Nz/2 -1, Nz)
+    x_range = np.linspace(1, Nx, Nx)
+    y_range = np.linspace(1, Ny, Ny)
+    z_range = np.linspace(1, Nz, Nz)
 
-    kx = np.append(x_range[:Nx//2], -x_range[Nx//2:0:-1])
-    ky = np.append(y_range[:Ny//2], -y_range[Ny//2:0:-1])
-    kz = np.append(z_range[:Nz//2], -z_range[Nz//2:0:-1])
+    kx =dkx *  np.append(x_range[:Nx//2], -x_range[Nx//2:0:-1])
+    ky =dky *  np.append(y_range[:Ny//2], -y_range[Ny//2:0:-1])
+    kz =dkz *  np.append(z_range[:Nz//2], -z_range[Nz//2:0:-1])
 
-    Lambda_x = kx
-    Lambda_y = ky 
-    Lambda_z = kz 
+    kkx, kkz = np.meshgrid(kx,kz)    
+    kkx_norm = np.sqrt(kkx[0,:]**2)
+    kkz_norm = np.sqrt(kkz[:,0]**2)
+
+
+    Lambda_x = (2*np.pi/kkx_norm) * eta
+    Lambda_z = (2*np.pi/kkz_norm) * eta
+    u_hat = np.fft.fftn(data)
+    # u_hat = np.fft.fftshift(u_hat)
     spectra = np.empty(shape=(Nx,nt))
-    # spectra = np.empty(shape=(Ny,nt))
-    for t in range(nt):
-        # At each timestep, fft on x-z plane
-        u_hat = np.fft.fftn(data[:,:,t])
-        u_hat = np.fft.fftshift(u_hat)
-        
-        
-        # eng   = np.absolute(u_hat.sum(0))**2
-        eng   = np.absolute(u_hat)**2 
-        spectra[:,t] = np.mean(eng,0)
-        
-    # spectra = spectra/spectra.max()
-    spectra = np.mean(spectra,-1) * kx 
-    wvnumberx = Lx *np.linspace(-Nx/2 , Nx/2 -1, Nx)
 
-    wvnumbery = Lambda_y * eta
-    wvnumberz = Lambda_z * eta
-    return spectra, wvnumberx
+    Ts = np.linspace(0,4,nt) / (eta /u_tau)
+
+    for x in range(Nx):
+
+            spectra[x,:] = np.mean(np.absolute(u_hat[:,x,:]),axis=0)
+            # spectra = np.mean(spectra,-1) 
+            # Spectra[:,t] = spectra
+    spectra = spectra.mean(0)
+    return spectra, Ts
 
 plt.rc('text', usetex = True)
 plt.rc('font', family = 'serif')
@@ -128,16 +123,16 @@ Ylabels = [
             ]
 
 Ylabels = [  
-            r"$E_{u}$",
-            r"$E_{v}$",
-            r"$E_{w}$",
+            r"$k_x E_{u}$",
+            r"$k_x E_{v}$",
+            r"$k_x E_{w}$",
             ]
 
 Fname  =  ["u","v",'w']
 
 for utype in range(3):
 
-    sp_u, wvnumber = PSD_1D(u,
+    sp_u,Ts = PSD_1D(u,
                     Nx = nx,
                     Ny = ny,
                     Nz = nz,
@@ -148,7 +143,7 @@ for utype in range(3):
                     utype= utype,
                     )
 
-    sp_t3s8, wvnumber = PSD_1D(u_pred2,
+    sp_t3s8,Ts = PSD_1D(u_pred2,
                     Nx = nx,
                     Ny = ny,
                     Nz = nz,
@@ -161,7 +156,7 @@ for utype in range(3):
 
 
 
-    sp_t3s16, wvnumber = PSD_1D(u_pred1,
+    sp_t3s16,Ts = PSD_1D(u_pred1,
                     Nx = nx,
                     Ny = ny,
                     Nz = nz,
@@ -175,48 +170,39 @@ for utype in range(3):
 
 
     fig, axs = plt.subplots(1,1,sharex=True, sharey=True, figsize=(6,4))
-
+    
     axs.loglog( 
-                wvnumber,
+                Ts,
                 sp_u,
+                # levels = np.array([0.1,0.5,0.9])*sp_u.max(),
+                # cmap = 'cmo.gray_r',
                 '-.',
                 c= cc.black,
                 lw = 3,
                 label = 'Reference'
             )
 
-    axs.loglog( 
-                wvnumber,
-                sp_t3s8,
+    axs.loglog(Ts,sp_t3s16,
                 "-o",
-                c = cc.blue,
+                c= cc.red,
                 lw = 2,
                 markersize = 7.5,
-                label = r'PINN--t3--s8'
-            )
+                label = r'PINN--t3--s16')
+    
 
-
-    axs.loglog( 
-                wvnumber,
-                sp_t3s16,
-                "-^",
-                c = cc.red,
+    axs.loglog(Ts,sp_t3s8,
+                "-o",
+                c= cc.blue,
                 lw = 2,
                 markersize = 7.5,
-                label = r'PINN--t3--s16'
-            )
+                label = r'PINN--t3--s8')
 
-    axs.set_ylabel(Ylabels[utype],font_dict )
-    # axs.set_xlabel(r"$k_x$"+r"$l^*$", font_dict)   
-    axs.set_xlabel(r"$k_{x^+}$", font_dict)   
-    # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
-    # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
+
+    axs.set_title(Ylabels[utype],font_dict )
+    # axs.set_ylabel(r"$k_{x^+}$", font_dict)   
+    axs.set_xlabel(r'$y^+$')
+    # axs.set_ylabel(Ylabels[utype],font_dict )
+    axs.set_ylabel(r"$\lambda^+_{x}$", font_dict)   
     
     # axs.set_ylim(5 * 10e-7, 10e0)
-    
-    axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
-
-    # axs.set_xticks([wvnumber.min(), 0.5 * wvnumber.max(), wvnumber.max()])
-
-    fig.savefig( f"Figs/PSD1d_{Fname[utype]}.pdf",bbox_inches='tight',dpi=1000)
-    fig.savefig( f"Figs/PSD1d_{Fname[utype]}.jpg",bbox_inches='tight',dpi=200)
+    fig.savefig( f"Figs/PSD1d_T_{Fname[utype]}.jpg",bbox_inches='tight',dpi=200)

@@ -226,7 +226,7 @@ ax[1,0].set_ylabel('$y$')
 ax[0,1].set_title('Reference')
 ax[0,0].set_title('PINNs')
 ax[1,0].set_title('$\\varepsilon = | p - \\tilde{p} |$', fontsize = 16)
-ax[1,1].set_title('$\\hat{\\varepsilon} = | (p - \\tilde{p})$' + "/" + "$ p |$" + " " + r"$\%$", fontsize = 16)
+ax[1,1].set_title('$\\hat{\\varepsilon} = | (p - \\tilde{p})$' + "/" + "$ p |$" + " " + r"$(\%)$", fontsize = 16)
 
 
 plt.savefig('clean_pressure.pdf', bbox_inches = 'tight', dpi = 500)

@@ -22,62 +22,61 @@ def PSD_1D(data,Nx,Ny,Nz, nt,Lx,Ly,Lz,utype=0):
     u_tau = Re_Tau*nu
     
     eta = nu / u_tau
-    
-    # eta = 1/Re**-0.75
-    # eta = 1
-    # nu =1
-    # u_tau =1 
-    yp = 30
+
+    print(f"Lambdax+ = { 0.6 * np.pi/eta}")
+    yp = 5
     y_loc = Ly * (yp/Ny) /eta
     print(f"At y+ = {y_loc}")
     y_loc = Ly * (yp/Ny)
-    print(f"At y = {y_loc}")
+    # print(f"At y = {y_loc}")
     xp = int(Nx/2)
+    
+    
     # utype = 2
     # Streamwise velocity at wall
     data = data[utype] 
-    # for t in range(nt):
-        # data[:,:,:,t] = data[:,:,:,t] - data.mean(-1)
+    data  = data - np.mean(data,-1,keepdims=True)
+    # data  = data**2
+    data    = data[:,yp,:,:]
+    
+    dkx = 2*np.pi/(Lx) * eta
+    dky = 2*np.pi/(Ly) * eta
+    dkz = 2*np.pi/(Lz) * eta
 
-    data    = data[:,yp,:,:] / u_tau
-    # data    = data[:,:,xp,:]
-    # Fluctuation
-    # Wavenumber spacing
-    dkx = 2*np.pi/(Lx) 
-    dky = 2*np.pi/(Ly)
-    dkz = 2*np.pi/(Lz)
+    x_range = np.linspace(0, Nx//2, Nx//2)
+    y_range = np.linspace(0, Ny//2, Ny//2)
+    z_range = np.linspace(0, Nz//2, Nz//2)
 
-    # Wave number 
-    x_range =  dkx *  np.linspace(-Nx/2 , Nx/2 -1, Nx)
-    y_range =  dky *  np.linspace(-Ny/2 , Ny/2 -1, Ny)
-    z_range =  dkz *  np.linspace(-Nz/2 , Nz/2 -1, Nz)
+    kx =dkx *  np.append(x_range, -x_range)
+    ky =dky *  np.append(y_range, -y_range)
+    kz =dkz *  np.append(z_range, -z_range)
 
-    kx = np.append(x_range[:Nx//2], -x_range[Nx//2:0:-1])
-    ky = np.append(y_range[:Ny//2], -y_range[Ny//2:0:-1])
-    kz = np.append(z_range[:Nz//2], -z_range[Nz//2:0:-1])
-
-    Lambda_x = kx
-    Lambda_y = ky 
-    Lambda_z = kz 
+    # kkx, kkz = np.meshgrid(kxW,kz)
+    kkx_norm = np.sqrt(kx**2)
+    kkz_norm = np.sqrt(kz**2)
+    # kkz_norm = np.sqrt(kkz**2)W
+    Lambda_x = (2*np.pi/kkx_norm)
+    Lambda_z = (2*np.pi/kkz_norm)
+    
     spectra = np.empty(shape=(Nx,nt))
-    # spectra = np.empty(shape=(Ny,nt))
     for t in range(nt):
-        # At each timestep, fft on x-z plane
         u_hat = np.fft.fftn(data[:,:,t])
+        
         u_hat = np.fft.fftshift(u_hat)
-        
-        
-        # eng   = np.absolute(u_hat.sum(0))**2
-        eng   = np.absolute(u_hat)**2 
-        spectra[:,t] = np.mean(eng,0)
-        
-    # spectra = spectra/spectra.max()
-    spectra = np.mean(spectra,-1) * kx 
-    wvnumberx = Lx *np.linspace(-Nx/2 , Nx/2 -1, Nx)
 
-    wvnumbery = Lambda_y * eta
-    wvnumberz = Lambda_z * eta
-    return spectra, wvnumberx
+        kx   = np.fft.fftfreq(Nx,d=Lx/Nx)
+        kz   = np.fft.fftfreq(Nz,d=Lz/Nz)
+        kx   = np.fft.fftshift(kx)
+        kz   = np.fft.fftshift(kz)
+        
+
+        spectra[:,t] = np.mean(np.abs(u_hat)**2,axis=0) * kx / u_tau**2
+    
+    spectra = np.mean(spectra,-1)
+
+    return spectra, Lambda_x
+
+
 
 plt.rc('text', usetex = True)
 plt.rc('font', family = 'serif')
@@ -99,10 +98,7 @@ v = ref['v']
 w = ref['w']
 t = ref['t']
 
-
-# Lx     =   np.abs(x.max()- x.min())
-# Ly     =   np.abs(y.max()- y.min())
-# Lz     =   np.abs(z.max()- z.min())
+print(f"Shape of U: {u.shape}")
 
 Lx     =  0.6 * np.pi 
 Ly     =  1 
@@ -114,6 +110,7 @@ u = np.stack([u, v, w])
 yy, zz, xx = np.meshgrid(y, z, x)
 
 nz, ny, nx = xx.shape
+print(f"Nz,Ny,Nx = {nz}, {ny}, {nx}")
 nt         = len(t)
 pred1 = np.load('../results/res_pinn_t3_s16.npz')
 u_pred1 = pred1['up'][:3]
@@ -128,16 +125,16 @@ Ylabels = [
             ]
 
 Ylabels = [  
-            r"$E_{u}$",
-            r"$E_{v}$",
-            r"$E_{w}$",
+            r"$k_x \Phi_{uu} / u^2_{\tau}$",
+            r"$k_x \Phi_{v} / u^2_{\tau}$",
+            r"$k_x \Phi_{w} / u^2_{\tau}$",
             ]
 
 Fname  =  ["u","v",'w']
 
 for utype in range(3):
 
-    sp_u, wvnumber = PSD_1D(u,
+    sp_u, lambx= PSD_1D(u,
                     Nx = nx,
                     Ny = ny,
                     Nz = nz,
@@ -148,20 +145,7 @@ for utype in range(3):
                     utype= utype,
                     )
 
-    sp_t3s8, wvnumber = PSD_1D(u_pred2,
-                    Nx = nx,
-                    Ny = ny,
-                    Nz = nz,
-                    nt = nt,
-                    Lx = Lx,
-                    Ly = Ly,
-                    Lz = Lz,
-                    utype= utype,
-                    )
-
-
-
-    sp_t3s16, wvnumber = PSD_1D(u_pred1,
+    sp_t3s8, lambx= PSD_1D(u_pred2,
                     Nx = nx,
                     Ny = ny,
                     Nz = nz,
@@ -173,50 +157,50 @@ for utype in range(3):
                     )
 
 
+
+    sp_t3s16, lambx= PSD_1D(u_pred1,
+                    Nx = nx,
+                    Ny = ny,
+                    Nz = nz,
+                    nt = nt,
+                    Lx = Lx,
+                    Ly = Ly,
+                    Lz = Lz,
+                    utype= utype,
+                    )
 
     fig, axs = plt.subplots(1,1,sharex=True, sharey=True, figsize=(6,4))
-
+    
     axs.loglog( 
-                wvnumber,
+                lambx,
                 sp_u,
                 '-.',
                 c= cc.black,
                 lw = 3,
                 label = 'Reference'
-            )
+    )
 
     axs.loglog( 
-                wvnumber,
+                lambx,
                 sp_t3s8,
                 "-o",
-                c = cc.blue,
+                c= cc.blue,
                 lw = 2,
                 markersize = 7.5,
                 label = r'PINN--t3--s8'
             )
 
-
     axs.loglog( 
-                wvnumber,
+                lambx,
                 sp_t3s16,
-                "-^",
-                c = cc.red,
+                "-o",
+                c= cc.red,
                 lw = 2,
                 markersize = 7.5,
                 label = r'PINN--t3--s16'
-            )
-
+                )
+    
     axs.set_ylabel(Ylabels[utype],font_dict )
-    # axs.set_xlabel(r"$k_x$"+r"$l^*$", font_dict)   
-    axs.set_xlabel(r"$k_{x^+}$", font_dict)   
-    # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
-    # axs.set_xlabel(r"$k_{y^+}$", font_dict)   
-    
-    # axs.set_ylim(5 * 10e-7, 10e0)
-    
+    axs.set_xlabel(r"$\lambda^+_{x}$", font_dict)   
     axs.legend(frameon=False, ncol = 3, loc = (0.0, 1.05), fontsize=13)
-
-    # axs.set_xticks([wvnumber.min(), 0.5 * wvnumber.max(), wvnumber.max()])
-
-    fig.savefig( f"Figs/PSD1d_{Fname[utype]}.pdf",bbox_inches='tight',dpi=1000)
-    fig.savefig( f"Figs/PSD1d_{Fname[utype]}.jpg",bbox_inches='tight',dpi=200)
+    fig.savefig( f"Figs/pre_PSD1d_{Fname[utype]}.jpg",bbox_inches='tight',dpi=200)
