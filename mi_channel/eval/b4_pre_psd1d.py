@@ -129,8 +129,8 @@ Ylabels = [
 
 Ylabels = [  
             r"$k_x \Phi_{uu} / u^2_{\tau}$",
-            r"$k_x \Phi_{v} / u^2_{\tau}$",
-            r"$k_x \Phi_{w} / u^2_{\tau}$",
+            r"$k_x \Phi_{vv} / u^2_{\tau}$",
+            r"$k_x \Phi_{ww} / u^2_{\tau}$",
             ]
 
 Fname  =  ["u","v",'w']
