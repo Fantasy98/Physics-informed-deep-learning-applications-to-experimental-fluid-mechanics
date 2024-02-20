@@ -66,7 +66,7 @@ epoch   = 1000
 ind     = 0
 s_w     = 10 
 u_w     = 1
-SampleFreq =2
+SampleFreq =6
 casename_pinn = f"SR_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 casename_mlp  = f"SR_NoPI_cp{cp}_nl{nl}_nn{nn}_epoch{epoch}_{s_w}S_{u_w}U_{SampleFreq}Sample"
 ud = np.load(fdir+casename_pinn+'.npz')
@@ -200,7 +200,7 @@ for i in range(len(dp1List)):
                         r" ${\epsilon}_{spine}$ ="+ f"{e_spine}% \n"+\
                         r" ${\epsilon}_{all}$ ="+ f"{e_all}%")
                 axs[j].set_xlabel(names[0][j],font_dict)
-axs[0].set_ylabel("y [m]",font_dict)
+axs[0].set_ylabel(r"$y$" + " [m]",font_dict)
 plt.savefig("04_fig/"+f"SR_All_compare_{SampleFreq}"+".pdf",dpi=1000,bbox_inches="tight")
 plt.savefig("04_fig/"+f"SR_All_compare_{SampleFreq}"+".jpg",dpi=1000,bbox_inches="tight")
 
