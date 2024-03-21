@@ -102,7 +102,6 @@ hist        = np.array(hist)
 cp          = ds[:,0]
 y_spine     = np.zeros(shape=cp.shape[0]*SampleFreq)
 y_spine[::SampleFreq] = cp
-# y_spine[1:-1:SampleFreq] = (cp[0:-1] + cp[1:])/2
 y_spine[-1] = cp[-1]
 x_spine     = np.ones(shape=y_spine.shape)*3
 cp_spine    = np.array([x_spine.flatten(), y_spine.flatten()]).T

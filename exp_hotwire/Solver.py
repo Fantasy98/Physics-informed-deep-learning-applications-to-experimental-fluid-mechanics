@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow.keras import models, layers, optimizers, activations
 from ScipyOP import optimizer as SciOP
 
-from PINNs import PINNs
+from usrPINNs import PINNs
 
 from time import time
 class Solver:
@@ -26,11 +26,11 @@ class Solver:
         hl = inp
         for _ in range(nl):
             hl = layers.Dense(nn,
-                      kernel_initializer='he_normal', 
-                      activation = act)(hl)
+                    kernel_initializer='he_normal', 
+                    activation = act)(hl)
             out = layers.Dense(6,
-                   kernel_initializer='he_normal',
-                   )(hl)
+                kernel_initializer='he_normal',
+                )(hl)
 
         self.model = models.Model(inp, out)
         print(f"The model has been bulited")
@@ -41,14 +41,13 @@ class Solver:
         opt = optimizers.Adam(self.lr)
         sopt = SciOP(self.model)
 
-        
         self.pinn = PINNs(self.model, opt, sopt, self.epoch, self.s_w, self.u_w)
         st_time = time()
-        hist = self.pinn.fit(ic, cp)
+        hist, residual = self.pinn.fit(ic, cp)
         en_time = time()
         comp_time = en_time - st_time
 
-        return hist, comp_time
+        return hist, residual, comp_time
 
     def pred(self,cp,gt,return_error = True):
         up = self.pinn.predict(cp)
@@ -63,6 +62,13 @@ class Solver:
         else:
             return up 
 
+    def auto_diff(self,cp):
+        opt = optimizers.Adam(self.lr)
+        sopt = SciOP(self.model)
+        pinn = PINNs(self.model, opt, sopt, self.epoch, self.s_w, self.u_w)
+        d = pinn.auto_diff(cp)
+
+        return d
 
     def l2_error(self,p,g):
        

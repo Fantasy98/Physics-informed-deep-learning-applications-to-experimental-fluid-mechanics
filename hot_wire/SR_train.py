@@ -21,7 +21,7 @@ We make a further downsampling which only use 4 points for interpolation
 #%%
 import argparse
 parser = argparse.ArgumentParser(description='PINN training')
-parser.add_argument('--cp', default= 50, type=int, help='Number of grid point')
+parser.add_argument('--cp', default= 51, type=int, help='Number of grid point')
 parser.add_argument('--nl', default= 4 , type=int, help='Number of layer')
 parser.add_argument('--nn', default= 40 , type=int, help='Number of neuron')
 parser.add_argument('--epoch', default=1000, type=int, help='Training Epoch')

@@ -48,7 +48,6 @@ class PINNs(models.Model):
             p_y = tape.gradient(p, y)
 
 
-
         uu_x = tape.gradient(uu,y)    
         uv_x = tape.gradient(uv,x)    
     

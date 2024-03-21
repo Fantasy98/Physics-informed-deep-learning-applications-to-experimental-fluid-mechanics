@@ -180,7 +180,7 @@ for utype in range(3):
                     )
 
     fig, axs = plt.subplots(1,1,sharex=True, sharey=True, figsize=(6,4))
-    
+    print(lambx[:len(lambx)//2:-1])    
     axs.loglog( 
                 lambx,
                 sp_u,
